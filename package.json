@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "compression-webpack-plugin": "^5.0.1",
     "core-js": "^3.6.5",
     "lib-flexible": "^0.3.2",
     "postcss-px2rem": "^0.3.0",
@@ -27,6 +28,7 @@
     "babel-plugin-import": "^1.13.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "image-webpack-loader": "^7.0.1",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mockjs": "^1.1.0",

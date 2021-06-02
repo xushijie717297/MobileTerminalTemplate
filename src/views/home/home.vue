@@ -73,6 +73,7 @@ export default {
       }
       span{
         font-size: 12px;
+        color: @bright;
       }
     }
   }
