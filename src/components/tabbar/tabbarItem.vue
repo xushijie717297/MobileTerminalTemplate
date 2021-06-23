@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-bar-item" @click="itemClick">
+  <div class="tab-bar-item" @click="itemClick" :class="{Select : isActive}">
     <div v-if="!isActive"><slot name="item-icon"></slot></div>
     <div v-else><slot name="item-icon-active"></slot></div>
     <div :style="activeStyle" class="bright">
@@ -14,7 +14,7 @@ export default {
     path: String,
     activeColor: {
       type: String,
-      default: "#4664E3"
+      default: "#fff"
     }
   },
   data() {
@@ -47,40 +47,30 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  // box-shadow: 0 -1px 1px rgba(100, 100, 100, 0.1);
+  background: #fff;
+  box-shadow:inset 0px 1px 1px -1px #000,inset 0px -1px 1px -1px #000;/*no*/
 }
 .tab-bar-item {
   flex: 1;
   height: 50px;
   font-size: 12px;
-  text-align: center;
-  color: #8E92A9;
-  &:nth-child(3){
-    div{
-      position: relative;
-      // background: red;
-      margin-top: 26px;
-      img{
-      height: 40px;
-      width: 40px;
-      position: absolute;
-      top: -42px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-    }
-    }
-  }
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 .tab-bar-item img {
   width: 20px;
   height: 20px;
-  margin-top: 6px;
   vertical-align: middle;
 }
 .bright{
   div{
-    transform: scale(.8,.8);
+    box-sizing: border-box;
+    padding: 2px 0 6px 0;/*no*/
   }
+}
+.Select{
+  background: #000;
 }
 </style>

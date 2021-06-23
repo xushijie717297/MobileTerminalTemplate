@@ -28,11 +28,11 @@ export default {
   data () {
     return {
       data:[
-        {"path":"/home","url":require("../../assets/img/iconfont/home.png"),"src":require("../../assets/img/iconfont/home-active.png"),"name":"首页"},
-        {"path":"/programme","url":require("../../assets/img/iconfont/category.png"),"src":require("../../assets/img/iconfont/category_active.png"),"name":"方案"},
-        {"path":"/shopcart","url":require("../../assets/img/iconfont/moxing.png"),"src":require("../../assets/img/iconfont/moxing.png"),"name":"模型"},
-        {"path":"/category","url":require("../../assets/img/iconfont/shopcart.png"),"src":require("../../assets/img/iconfont/shopcart_active.png"),"name":"任务"},
-        {"path":"/profile","url":require("../../assets/img/iconfont/profile.png"),"src":require("../../assets/img/iconfont/profile_active.png"),"name":"我的"},
+        {"path":"/control","url":require("../../assets/img/iconfont/control-active.png"),"src":require("../../assets/img/iconfont/control.png"),"name":"监控"},
+        {"path":"/event","url":require("../../assets/img/iconfont/event_active.png"),"src":require("../../assets/img/iconfont/event.png"),"name":"事件"},
+        {"path":"/workOrder","url":require("../../assets/img/iconfont/workOrder_active.png"),"src":require("../../assets/img/iconfont/workOrder.png"),"name":"工单"},
+        {"path":"/Statistics","url":require("../../assets/img/iconfont/Statistics_active.png"),"src":require("../../assets/img/iconfont/Statistics.png"),"name":"统计"},
+        {"path":"/mine","url":require("../../assets/img/iconfont/mine_active.png"),"src":require("../../assets/img/iconfont/mine.png"),"name":"我的"},
       ]
     }
   },
@@ -48,7 +48,7 @@ export default {
     width: 100%;
     #statusBar{
         height: 24px;
-        background: #242838;
+        background: #000;
     }
 }
 </style>

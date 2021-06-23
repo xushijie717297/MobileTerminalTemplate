@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
     <router-view />
   </div>
 </template>
@@ -40,6 +39,7 @@ export default {
 </script>
 
 <style>
+/* @import "./assets/css/popup.less"; */
 * {
   -webkit-touch-callout: none; /*系统默认菜单被禁用*/
   -webkit-user-select: none; /*webkit浏览器*/
@@ -58,6 +58,10 @@ body,
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background: #242838;
+  background: #000;
+}
+::-webkit-scrollbar {
+  /* background: transparent; */
+  display: none;
 }
 </style>

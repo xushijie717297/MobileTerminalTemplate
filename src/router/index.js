@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from '../views/home/home.vue'
+import control from '../views/control/control.vue'
 import error from '@/views/404/error'
 
 Vue.use(VueRouter)
@@ -18,33 +18,33 @@ const routes = [
 	{
 		path: '/',
 		name: 'menu',
-		redirect: "/home",
+		redirect: "/control",
 		component: resolve => require(['@/views/menu/menu'], resolve),
 		children: [{
-				path: '/home',
-				name: 'home',
-				component: home
+				path: '/control',
+				name: 'control',
+				component: control
 			},
 			{
-				path: '/category',
-				name: 'category',
-				component: resolve => require(['@/views/category/category'], resolve),
+				path: '/Statistics',
+				name: 'Statistics',
+				component: resolve => require(['@/views/Statistics/Statistics'], resolve),
 			},
 			{
-				path: '/profile',
-				name: 'profile',
-				component: resolve => require(['@/views/profile/profile'], resolve),
+				path: '/mine',
+				name: 'mine',
+				component: resolve => require(['@/views/mine/mine'], resolve),
 				// meta:{requireAuth:true}
 			},
 			{
-				path: '/shopcart',
-				name: 'shopcart',
-				component: resolve => require(['@/views/shopcart/shopcart'], resolve),
+				path: '/workOrder',
+				name: 'workOrder',
+				component: resolve => require(['@/views/workOrder/workOrder'], resolve),
 			},
 			{
-				path: '/programme',
-				name: 'programme',
-				component: resolve => require(['@/views/programme/programme'], resolve),
+				path: '/event',
+				name: 'event',
+				component: resolve => require(['@/views/event/event'], resolve),
 				meta: {
 					requireAuth: true
 				}
@@ -54,7 +54,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-	mode: 'history',
+	// mode: 'history',
 	base: process.env.BASE_URL,
 	routes
 })
