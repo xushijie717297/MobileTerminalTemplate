@@ -1,0 +1,56 @@
+{
+    "WarningTypeData": [
+        {
+            "Type": "pressure",
+            "Icon": "zhixinqujian",
+            "ImgText": "置信区间"
+        },
+        {
+            "Type": "flow",
+            "Icon": "zhixinqujian",
+            "ImgText": "置信区间"
+        },
+        {
+            "Type": "pipeburst",
+            "Icon": "loushidingwei",
+            "ImgText": "漏失定位"
+        },
+        {
+            "Type": "minflowatnight",
+            "Icon": "yejianzuixiaoliuliang",
+            "ImgText": "夜间最小流量"
+        },
+        {
+            "Type": "offline",
+            "Icon": "lixian",
+            "ImgText": "离线报警"
+        },
+        {
+            "Type": "stop",
+            "Icon": "kating",
+            "ImgText": "卡停报警"
+        },
+        {
+            "Type": "chaoshangxian",
+            "Icon": "chaoshangxian",
+            "ImgText": "超限报警"
+        }
+    ],
+    "LevelData": [
+        {
+            "Level": 1,
+            "bgcolor": "#C8E5F7",
+            "iconcolor":"#23a2f2"
+        },
+        {
+            "Level": 2,
+            "bgcolor": "#F9E5C5",
+            "iconcolor":"#DD8A4F"
+        },
+        {
+            "Level": 3,
+            "bgcolor": "#FCD2D6",
+            "iconcolor":"#C3303F"
+        }
+    ]
+}

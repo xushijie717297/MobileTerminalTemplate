@@ -1,0 +1,182 @@
+.theme(@background: #2789ff, @homebg: rgba(37, 37, 37, 1.00), @fontcolor: #fff, @hoverbg: #b9bec9, @activebg: #5193e2,@fontcolo:#000,@fontcol:#000,@img:button01,@homeli1: rgba(47, 42, 65, 0.5), @homeli2: #2e3d50) {
+h4{
+	background-color: @background;
+	color: @fontcolor;
+}
+.demo{
+	background-color: @background;
+	color: @fontcolor;
+}
+.index1{
+	border: 1px solid @fontcol;
+	// background: url(image/button01.png);
+	background: url('../assets/img/@{img}.png') no-repeat;
+	background-size: cover;
+}
+.index2{
+	border: 1px solid @fontcolo;
+}
+    // 头部的样式
+    .header_bar {
+        background: @background;
+
+        .title {
+            color: @fontcolor;
+        }
+
+        .user_container {
+            .user_message {
+                color: @fontcolor;
+            }
+        }
+
+        .user_manage {
+            .ivu-dropdown-rel {
+                span {
+                    color: @fontcolor;
+                }
+            }
+        }
+
+        .user_alert {
+            .user_list:hover {
+                background: @background;
+                color: @fontcolor;
+
+                .theme_ul li:hover {
+                    background: @background;
+                    color: @fontcolor;
+                }
+            }
+        }
+
+    }
+
+
+    // 导航栏的样式
+    .router_nav_box {
+        .go_back {
+            color: @background ;
+        }
+
+        .navList .navlist_p1 {
+            background: @background;
+            color: @fontcolor;
+        }
+
+        .nav_box .router_nav:hover {
+            border-bottom: 3px solid @background;
+            color: @background
+        }
+
+        .select {
+            border-bottom: 3px solid @background;
+            color: @background
+        }
+    }
+
+    // 列表的样式
+    .list_box {
+
+        .list_left {
+
+            // 左边栏的树状结构的选中的样式
+            .is-current .el-tree-node__content {
+                background: @background;
+                color: @fontcolor;
+            }
+
+            // 左边栏的滚动条的样式。
+            &::-webkit-scrollbar-thumb:hover {
+                background: @background;
+            }
+        }
+
+        .list_right {
+
+            // 第一行标题
+            .list_title {
+                color: @background;
+            }
+
+            // 第二行查询条件
+            .list_query {
+                .query_nav {
+                    .list_query_btn {
+                        background: @background;
+                        color: @fontcolor;
+                    }
+
+                    .el-input__inner:focus {
+                        border-color: @background;
+                    }
+                }
+            }
+
+            // 第三行增删改查
+            .list_handle {
+                p:hover {
+                    color: @background;
+                }
+            }
+        }
+    }
+
+    // 弹出框的样式
+    .alert_box {
+
+        // 头部的背景
+        .P_alert_top {
+            background: @background;
+            color: @fontcolor;
+        }
+
+        // 产品弹出框导入已有产品
+        .alert_newly span:hover {
+            background: @background;
+            color: @fontcolor;
+            border: none;
+        }
+        // 产品介绍里面右边的当前选择的样式
+        .jieshao_con .jieshao_right .right_ul li .rightNav_active {
+            background: @background !important;
+        }
+
+        // 输入框聚焦时的边框颜色
+        .el-input__inner:focus {
+            border-color: @background;
+        }
+
+        .el-textarea__inner:focus {
+            border-color: @background;
+        }
+
+        // 弹出框里有的有选择的按钮
+        .alertSelect_btn {
+            background: @background;
+            color: @fontcolor;
+        }
+
+        // 上传图片的按钮样式
+        .unload_btn {
+            background: @background;
+            color: @fontcolor;
+        }
+
+
+        // 分页选中的样式
+        .set_page {
+            .el-pager .active {
+                background: @background  !important;
+            }
+        }
+
+        .ipt_box::-webkit-scrollbar-thumb:hover {
+            background: @background;
+        }
+
+        .ivu-table-overflowY::-webkit-scrollbar-thumb:hover {
+            background: @background;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "workjson":[
+        {"color":"#C3303F",
+            "type":"未受理",
+            "typeNum":0
+        },
+        {"color":"#DD8A4F",
+            "type":"处理中",
+            "typeNum":1
+        },    
+        {"color":"#DD8A4F",
+            "type":"未完成",
+            "typeNum":2
+        },     
+        {"color":"#9A9A9A",
+            "type":"已完成",
+            "typeNum":3
+
+        }
+    ]
+}

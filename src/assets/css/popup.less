@@ -1,0 +1,585 @@
+.esri-view .esri-view-surface--inset-outline:focus::after {
+    outline: none !important;
+}
+//*************************************************popupTableWater*************************************************
+.popupTableWater {
+    position: absolute;
+    text-align: center;
+    top:0px;/*no*/
+    left:0px;/*no*/
+    z-index: 1;
+    &:hover {
+        z-index: 2;
+    }
+}
+.content-popupTableWater {
+    line-height: 1.4;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;/*no*/
+    color: #333;
+    max-width: 300px;/*no*/
+}
+.table-popupTableWater-flow{
+    color: #FFFFFF;
+    background: #298568;
+    border: 1px solid #23E2BC;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table-popupTableWater-pressure{
+    color: #FFFFFF;
+    background: #3064A5;
+    border: 1px solid #24D2F1;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table1-popupTableWater{
+    border-top: 1px solid #19293D;
+    width: 100%;
+}
+.table-td-l-popupTableWater{
+    padding: 5px 10px;/*no*/
+    font-weight: bold;
+    width: 120px;/*no*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+.table-td-r-popupTableWater{
+    border-left: 0;
+    border-right: 1px solid #19293D;
+    border-bottom: 1px solid #19293D;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3px 10px;/*no*/
+    color: #374049;
+    font-weight: bold;
+}
+.tip-container-popupTableWater {
+    margin: 0 auto;
+    width: 12px;/*no*/
+    height: 12px;/*no*/
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    left: 63px;/*no*/
+    top: 26px;/*no*/
+}
+.tip-b-popupTableWater-flow {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #23E2BC;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWater-flow {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #298568;
+    position: absolute;
+    left: 1px;/*no*/
+}
+.tip-b-popupTableWater-pressure {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #24D2F1;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWater-pressure {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #3064A5;
+    position: absolute;
+    left: 1px;/*no*/
+}
+//*************************************************popupTableWaterExit*************************************************
+.popupTableWaterExit {
+    position: absolute;
+    text-align: center;
+    top:0px;/*no*/
+    left:0px;/*no*/
+    z-index: 1;
+    &:hover {
+        z-index: 2;
+    }
+}
+.content-popupTableWaterExit {
+    line-height: 1.4;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;/*no*/
+    color: #333;
+    max-width: 300px;/*no*/
+}
+.table-popupTableWaterExit-flow{
+    color: #FFFFFF;
+    background: #298568;
+    border: 1px solid #23E2BC;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table-popupTableWaterExit-pressure{
+    color: #FFFFFF;
+    background: #3064A5;
+    border: 1px solid #24D2F1;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table1-popupTableWaterExit{
+    border-top: 1px solid #19293D;
+    width: 100%;
+}
+.table-td-l-popupTableWaterExit{
+    padding: 5px 10px;/*no*/
+    font-weight: bold;
+    width: 120px;/*no*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+.table-td-r-popupTableWaterExit{
+    border-left: 0;
+    border-right: 1px solid #19293D;
+    border-bottom: 1px solid #19293D;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3px 10px;/*no*/
+    color: #374049;
+    font-weight: bold;
+}
+.tip-container-popupTableWaterExit {
+    margin: 0 auto;
+    width: 12px;/*no*/
+    height: 12px;/*no*/
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    left: 63px;/*no*/
+    top: 26px;/*no*/
+}
+.tip-b-popupTableWaterExit-flow {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #23E2BC;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWaterExit-flow {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #298568;
+    position: absolute;
+    left: 1px;/*no*/
+}
+.tip-b-popupTableWaterExit-pressure {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #24D2F1;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWaterExit-pressure {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #3064A5;
+    position: absolute;
+    left: 1px;/*no*/
+}
+//*************************************************popupAreaInformation*************************************************
+.popupAreaInformation {
+    position: absolute;
+    text-align: center;
+    top:0px;/*no*/
+    left:0px;/*no*/
+    z-index: 1;
+    pointer-events: none;
+    &:hover {
+        z-index: 2;
+    }
+}
+.content-popupAreaInformation {
+    line-height: 1.4;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;/*no*/
+    color: #333;
+    max-width: 300px;/*no*/
+}
+.content-popupAreaInformation1 {
+    font-family: "Microsoft YaHei";
+    font-size: 12px;/*no*/
+    color: #fff;
+    width: 95px;/*no*/
+    height: 60px;/*no*/
+    background-color: #000000;
+    box-shadow: 0px 4px 9px 0px #373737;
+}
+.popupAreaInformation-title{
+    height: 22px;/*no*/
+    line-height: 22px;/*no*/
+    padding-left: 10px;/*no*/
+    padding-right: 10px;/*no*/
+    background-color: #323232;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.popupAreaInformation-content{
+    width: 100%;
+    height: 38px;/*no*/
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.popupAreaInformation-Level1{
+    width: 23px;/*no*/
+    height: 23px;/*no*/
+    line-height: 23px;/*no*/
+    border: 2px solid #FF0000;
+    background-color: #CF0000;
+}
+.popupAreaInformation-Level2{
+    width: 23px;/*no*/
+    height: 23px;/*no*/
+    line-height: 23px;/*no*/
+    border: 2px solid #FEB800;
+    background-color: #FC7708;
+}
+.popupAreaInformation-Level3{
+    width: 23px;/*no*/
+    height: 23px;/*no*/
+    line-height: 23px;/*no*/
+    border: 2px solid #00B2F1;
+    background-color: #0071C6;
+}
+.popupAreaInformation-Level-fontSize12{
+    letter-spacing: 0px;/*no*/
+    font-size: 12px;/*no*/
+}
+.popupAreaInformation-Level-fontSize10{
+    letter-spacing: 0px;/*no*/
+    font-size: 12px;/*no*/
+    transform: scale(0.8);
+    display: flex;
+    justify-content: center;
+}
+.table-popupAreaInformation-1{
+    width: 90px;/*no*/
+    border-radius: 8px;/*no*/
+    border: 2px solid #22D3E8;
+    background-color: #2C84C8;
+    box-shadow: 0px 6px 8px 0px rgba(9, 17, 25, 0.6);
+}
+.table-popupAreaInformation-2{
+    width: 90px;/*no*/
+    border-radius: 8px;/*no*/
+    border: 2px solid #FFD257;
+    background-color: #B77C52;
+    box-shadow: 0px 6px 8px 0px rgba(9, 17, 25, 0.6);
+}
+.table-popupAreaInformation-3{
+    width: 90px;/*no*/
+    border-radius: 8px;/*no*/
+    border: 2px solid #EC4D4D;
+    background-color: #A42935;
+    box-shadow: 0px 6px 8px 0px rgba(9, 17, 25, 0.6);
+}
+.table1-popupAreaInformation{
+    width: 100%;
+    padding-bottom: 5px;/*no*/
+    padding-right: 5px;/*no*/
+}
+.table-td-l-popupAreaInformation{
+    padding: 2px 5px;/*no*/
+    padding-right: 3px;/*no*/
+    color: #EAEAEA;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+.table-td-r-popupAreaInformation{
+    // padding-right: 5px;/*no*/
+    // border-bottom: 1px solid #455FA8;
+    // background: #7D1C26;
+    // box-shadow: 0px 1px 0px 0px #455FA8, 0px 2px 2px 0px #061B57;
+    text-align: right;
+    color: #fff;
+    font-weight: bold;
+    width: 60%;
+}
+.table-td-r-s-popupAreaInformation-1{
+    padding-right: 5px;/*no*/
+    background: #186098;
+}
+.table-td-r-s-popupAreaInformation-2{
+    padding-right: 5px;/*no*/
+    background: #975D34;
+}
+.table-td-r-s-popupAreaInformation-3{
+    padding-right: 5px;/*no*/
+    background: #7D1C26;
+}
+.tip-container-popupAreaInformation {
+    margin: 0 auto;
+    width: 16px;/*no*/
+    height: 12px;/*no*/
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    left: 42px;/*no*/
+    top: 86px;/*no*/
+}
+.tip-b-popupAreaInformation-1 {
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top: 12px solid #22D3E8;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupAreaInformation-1 {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #2C84C8;
+    position: absolute;
+    left: 2px;/*no*/
+}
+.tip-b-popupAreaInformation-2 {
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top: 12px solid #FFD257;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupAreaInformation-2 {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #B77C52;
+    position: absolute;
+    left: 2px;/*no*/
+}
+.tip-b-popupAreaInformation-3 {
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top: 12px solid #EC4D4D;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupAreaInformation-3 {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #A42935;
+    position: absolute;
+    left: 2px;/*no*/
+}
+//*************************************************popupTableWater_p*************************************************
+.popupTableWater_p {
+    position: absolute;
+    text-align: center;
+    top:0px;/*no*/
+    left:0px;/*no*/
+    z-index: 1;
+    &:hover {
+        z-index: 2;
+    }
+}
+.content-popupTableWater_p {
+    line-height: 1.4;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;/*no*/
+    color: #333;
+    max-width: 300px;/*no*/
+}
+.table-popupTableWater_p-flow{
+    color: #FFFFFF;
+    background: #298568;
+    border: 1px solid #23E2BC;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table-popupTableWater_p-pressure{
+    color: #FFFFFF;
+    background: #3064A5;
+    border: 1px solid #24D2F1;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table1-popupTableWater_p{
+    border-top: 1px solid #19293D;
+    width: 100%;
+}
+.table-td-l-popupTableWater_p{
+    padding: 5px 10px;/*no*/
+    font-weight: bold;
+    width: 120px;/*no*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+.table-td-r-popupTableWater_p{
+    border-left: 0;
+    border-right: 1px solid #19293D;
+    border-bottom: 1px solid #19293D;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3px 10px;/*no*/
+    color: #374049;
+    font-weight: bold;
+}
+.tip-container-popupTableWater_p {
+    margin: 0 auto;
+    width: 12px;/*no*/
+    height: 12px;/*no*/
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    left: 63px;/*no*/
+    top: 26px;/*no*/
+}
+.tip-b-popupTableWater_p-flow {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #23E2BC;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWater_p-flow {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #298568;
+    position: absolute;
+    left: 1px;/*no*/
+}
+.tip-b-popupTableWater_p-pressure {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #24D2F1;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWater_p-pressure {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #3064A5;
+    position: absolute;
+    left: 1px;/*no*/
+}
+//*************************************************popupTableWaterExit_p*************************************************
+.popupTableWaterExit_p {
+    position: absolute;
+    text-align: center;
+    top:0px;/*no*/
+    left:0px;/*no*/
+    z-index: 1;
+    &:hover {
+        z-index: 2;
+    }
+}
+.content-popupTableWaterExit_p {
+    line-height: 1.4;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;/*no*/
+    color: #333;
+    max-width: 300px;/*no*/
+}
+.table-popupTableWaterExit_p-flow{
+    color: #FFFFFF;
+    background: #298568;
+    border: 1px solid #23E2BC;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table-popupTableWaterExit_p-pressure{
+    color: #FFFFFF;
+    background: #3064A5;
+    border: 1px solid #24D2F1;
+    box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.35);
+    border-radius: 4px;/*no*/
+}
+.table1-popupTableWaterExit_p{
+    border-top: 1px solid #19293D;
+    width: 100%;
+}
+.table-td-l-popupTableWaterExit_p{
+    padding: 5px 10px;/*no*/
+    font-weight: bold;
+    width: 120px;/*no*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+.table-td-r-popupTableWaterExit_p{
+    border-left: 0;
+    border-right: 1px solid #19293D;
+    border-bottom: 1px solid #19293D;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3px 10px;/*no*/
+    color: #374049;
+    font-weight: bold;
+}
+.tip-container-popupTableWaterExit_p {
+    margin: 0 auto;
+    width: 12px;/*no*/
+    height: 12px;/*no*/
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    left: 63px;/*no*/
+    top: 26px;/*no*/
+}
+.tip-b-popupTableWaterExit_p-flow {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #23E2BC;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWaterExit_p-flow {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #298568;
+    position: absolute;
+    left: 1px;/*no*/
+}
+.tip-b-popupTableWaterExit_p-pressure {
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-top: 11px solid #24D2F1;
+    position: absolute;
+    top: 1px;/*no*/
+}
+.tip-popupTableWaterExit_p-pressure {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top: 10px solid #3064A5;
+    position: absolute;
+    left: 1px;/*no*/
+}
