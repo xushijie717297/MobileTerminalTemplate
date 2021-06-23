@@ -23,7 +23,6 @@ export const Mixin = {
                 pageSize:this.pageSize,
                 type:this.type,
             }
-            console.log(data)
         }
     }
 }
