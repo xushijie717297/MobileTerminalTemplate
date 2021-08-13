@@ -3,7 +3,7 @@
     <p id="statusBar"></p>
     <div class="box">
       <div class="navList">
-        <van-tabs v-model="active" @click="onClick">
+        <van-tabs v-model="active" @click="onClick" ref="vanTab">
           <van-tab
             v-for="(item, index) in eventList"
             :key="index"
@@ -50,10 +50,23 @@ export default {
     onClick(name, title) {
       this.tabValue = name
       console.log(name,title)
+      localStorage.setItem("active",name)
     }
   },
-  mounted() {},
-  created() {},
+  mounted() {
+      console.log(this.tabValue,this.active)
+      let tab = localStorage.getItem("active")
+      if (tab != null) {
+        console.log(tab)
+        this.active = Number(tab)
+        this.tabValue = Number(tab)
+        console.log(this.active,this.tabValue)
+      }
+      this.$refs.vanTab.resize();
+  },
+  created() {
+
+  },
 };
 </script>
 <style scoped lang="less">
@@ -78,5 +91,9 @@ export default {
     background: #fff;
     overflow: auto;
   }
+}
+.content{
+  flex: 1;
+  overflow: hidden;
 }
 </style>

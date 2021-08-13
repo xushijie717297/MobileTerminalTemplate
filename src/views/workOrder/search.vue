@@ -17,12 +17,10 @@
             @confirm="onConfirm"
             get-container="#app"
             :min-date="minDate"
+            :formatter="formatter"
           />
         </van-dropdown-item>
       </van-dropdown-menu>
-      <div class="icon">
-        <van-icon name="sort" color="#000" />
-      </div>
     </div>
   </div>
 </template>
@@ -35,7 +33,10 @@ Vue.use(Icon);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 import * as timeStamp from "../../utils/index";
+import {Mixin} from "../../minxin/mixin";
+import moment from "moment";
 export default {
+  mixins: [Mixin],
   data() {
     return {
       minDate: new Date(2010, 0, 1),
@@ -68,7 +69,8 @@ export default {
     };
   },
   mounted () {
-     console.log(this.rangeDate) 
+    console.log(this.rangeDate);
+    console.log(this.CountByDay)
   },
   methods: {
     getValue(value){
@@ -77,6 +79,14 @@ export default {
     onItemClick(item){
       item.classNames = !item.classNames
       console.log(item)
+    },
+    formatter(day){
+      const date = (moment(day.date).format("YYYY-MM-DD"))
+          if (this.CountByDay.includes(date)) {
+            day.className = "dateRed"
+            console.log(day)
+          }
+      return day
     },
     formatDate(date) {
       return `${date.getMonth() + 1}/${date.getDate()}`;
@@ -104,7 +114,34 @@ export default {
   },
 };
 </script>
-
+<style lang="less">
+.dateRed::before{
+  content: "";
+  display: block;
+  height: 4px;
+  width: 4px;
+  background: orange;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 15px;
+}
+.van-calendar__day--end,.van-calendar__day--start{
+  background: #000;
+}
+.van-calendar__day--middle{
+  color: #000;
+}
+.van-calendar__day--end::before{
+  display: none;
+}
+.van-calendar__day--start::before{
+  display: none;
+}
+.van-button--danger{
+  background: #000;
+  border-color: #000;
+}
+</style>
 <style lang="less" scoped>
 .search {
   width: 100%;

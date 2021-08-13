@@ -38,15 +38,16 @@ class Methods {
     }
 
     loadinfoWindow(obj) {
+        console.log(obj)
         const popupID = this.popupName + obj.id;
         //动态添加气泡窗口DIV
         var infoDiv = '<div id="popup-AreaInformation' + popupID + '" class="popupAreaInformation">' +
             '<div id="' + popupID + '" class="content-popupAreaInformation1">' + 
             '<div class="popupAreaInformation-title" title="' + obj.Name + '">' + obj.Name + '</div>' + 
             '<div class="popupAreaInformation-content">' + 
-            '<div class="popupAreaInformation-Level3"><div class="' + (String(obj.Values[0].Value).length > 3 ? 'popupAreaInformation-Level-fontSize10' : 'popupAreaInformation-Level-fontSize12') + '">' + obj.Values[0].Value + '</div></div>' + 
-            '<div class="popupAreaInformation-Level2"><div class="' + (String(obj.Values[1].Value).length > 3 ? 'popupAreaInformation-Level-fontSize10' : 'popupAreaInformation-Level-fontSize12') + '">' + obj.Values[1].Value + '</div></div>' + 
-            '<div class="popupAreaInformation-Level1"><div class="' + (String(obj.Values[2].Value).length > 3 ? 'popupAreaInformation-Level-fontSize10' : 'popupAreaInformation-Level-fontSize12') + '">' + obj.Values[2].Value + '</div></div>' + 
+            '<div class="' + (String(obj.Values[0].Value) == 0 ? 'popupAreaInformation-LevelAsh' : 'popupAreaInformation-Level3') + '"><div class="' + (String(obj.Values[0].Value).length > 3 ? 'popupAreaInformation-Level-fontSize10' : 'popupAreaInformation-Level-fontSize12') + '">' + obj.Values[0].Value + '</div></div>' + 
+            '<div class="' + (String(obj.Values[1].Value) == 0 ? 'popupAreaInformation-LevelAsh' : 'popupAreaInformation-Level2') + '"><div class="' + (String(obj.Values[1].Value).length > 3 ? 'popupAreaInformation-Level-fontSize10' : 'popupAreaInformation-Level-fontSize12') + '">' + obj.Values[1].Value + '</div></div>' + 
+            '<div class="' + (String(obj.Values[2].Value) == 0 ? 'popupAreaInformation-LevelAsh' : 'popupAreaInformation-Level1') + '"><div class="' + (String(obj.Values[2].Value).length > 3 ? 'popupAreaInformation-Level-fontSize10' : 'popupAreaInformation-Level-fontSize12') + '">' + obj.Values[2].Value + '</div></div>' + 
             '</div>' +
             '</div>' +
             '</div>' + 

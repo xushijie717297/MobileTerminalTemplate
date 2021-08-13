@@ -7,7 +7,7 @@ const Webpack = require('webpack')
 const CompressionWebpackPlugin = require("compression-webpack-plugin"); // 开启gzip压缩， 按需引用
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i; // 开启gzip压缩， 按需写入
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin; // 打包分析
-const IS_PROD = ['production', 'development'].includes(process.env.NODE_ENV);
+// const IS_PROD = ['production', 'development'].includes(process.env.NODE_ENV);
 const IP = require("ip").address();
 module.exports = {
     publicPath: "./", //process.env.NODE_ENV === "production" ? "./" : "./",
@@ -33,7 +33,7 @@ module.exports = {
         }])
         // 打包分析
         // 打包之后自动生成一个名叫report.html文件(可忽视)
-        if (IS_PROD) {
+        // if (IS_PROD) {
             // 压缩图片
             // config.module
             //   .rule("images")
@@ -53,7 +53,7 @@ module.exports = {
             //     analyzerMode: "static"
             //   }
             // ]);
-          }
+        //   }
     },
     configureWebpack: (config) => {
         if (process.env.NODE_ENV === "production") {
@@ -61,18 +61,18 @@ module.exports = {
         }
         config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
         const plugins = [];
-        if (IS_PROD) {
-            plugins.push(
-                new CompressionWebpackPlugin({
-                    filename: "[path].gz[query]",
-                    algorithm: "gzip",
-                    test: productionGzipExtensions,
-                    threshold: 10240,
-                    minRatio: 0.8
-                })
-            );
-        }
-        config.plugins = [...config.plugins, ...plugins];
+        // if (IS_PROD) {
+        //     plugins.push(
+        //         new CompressionWebpackPlugin({
+        //             filename: "[path].gz[query]",
+        //             algorithm: "gzip",
+        //             test: productionGzipExtensions,
+        //             threshold: 10240,
+        //             minRatio: 0.8
+        //         })
+        //     );
+        // }
+        // config.plugins = [...config.plugins, ...plugins];
     },
     css: {
 		// 启用 CSS modules

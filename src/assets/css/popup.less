@@ -241,6 +241,14 @@
     justify-content: space-evenly;
     align-items: center;
 }
+.popupAreaInformation-LevelAsh{
+    width: 23px;/*no*/
+    height: 23px;/*no*/
+    line-height: 23px;/*no*/
+    border: 2px solid #505050;
+    background-color: #323232;
+    color: #9F9F9F;
+}
 .popupAreaInformation-Level1{
     width: 23px;/*no*/
     height: 23px;/*no*/
@@ -583,3 +591,110 @@
     position: absolute;
     left: 1px;/*no*/
 }
+// 事件列表Popup
+.diffuseBubbles {
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    background: transparent;
+    border: none;
+    z-index: 0;
+  }
+  
+  .diffuseBubbles:before {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    left: 7px;
+    z-index: 1;
+  }
+  .diffuseBubbles-P:before {
+    content: "P";
+  }
+  .diffuseBubbles-F:before {
+    content: "F";
+  }
+  .diffuseBubbles-circle-icon .blue {
+    background-color: rgba(56, 126, 181, 1);
+    animation: pulse 4s ease-out infinite 1s;
+  }
+  .diffuseBubbles-circle-icon .blue:after {
+    box-shadow: 0 0 2px 2px rgba(56, 126, 181, 1);
+    background: rgba(56, 126, 181, 0.4);
+    animation: pulsate 4s ease-out infinite 1s;
+  }
+  .diffuseBubbles-circle-icon .red {
+    background-color: rgba(179, 38, 34, 1);
+    animation: pulse 4s ease-out infinite 0s;
+  }
+  .diffuseBubbles-circle-icon .red:after {
+    box-shadow: 0 0 2px 2px rgba(179, 38, 34, 1);
+    background: rgba(179, 38, 34, 0.4);
+    animation: pulsate 4s ease-out infinite 0s;
+  }
+  .diffuseBubbles-circle-icon .yellow {
+    background-color: rgba(189, 109, 52, 1);
+    animation: pulse 4s ease-out infinite 0.5s;
+  }
+  .diffuseBubbles-circle-icon .yellow:after {
+    box-shadow: 0 0 2px 2px rgba(189, 109, 52, 1);
+    background: rgba(189, 109, 52, 0.4);
+    animation: pulsate 4s ease-out infinite 0.5s;
+  }
+  .diffuseBubbles-circle-icon {
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+  }
+  .diffuseBubbles-circle-icon:after {
+    content: "";
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    height: 300%;
+    width: 300%;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    margin: -100% 0 0 -100%;
+    opacity: 0;
+  }
+  @keyframes pulsate {
+    40% {
+      transform: scale(0.1, 0.1);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+      filter: alpha(opacity=0);
+    }
+    80% {
+      opacity: 1;
+      -ms-filter: none;
+      filter: none;
+    }
+    100% {
+      transform: scale(1.2, 1.2);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+      filter: alpha(opacity=0);
+    }
+  }
+  @keyframes pulse {
+    40% {
+      transform: scale(1, 1);
+    }
+    65% {
+      transform: scale(2, 2);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }

@@ -1,6 +1,7 @@
 <template>
   <div class="waring">
     <p id="statusBar"></p>
+    <p class="nav">工单</p>
     <search></search>
     <div class="dataNull" v-if="show">
       <p class="iconfont iconzanwushuju"></p>
@@ -53,12 +54,17 @@
         </van-collapse-item>
       </van-collapse>
     </div>
+    <van-popup v-model="popupShow" get-container="#app">
+      <van-loading type="spinner" color="#1989fa" size="24" />
+    </van-popup>
   </div>
 </template>
 <script>
 import Vue from "vue";
-import { Collapse, CollapseItem, Icon, DropdownMenu, DropdownItem} from "vant";
+import { Collapse, CollapseItem, Icon, DropdownMenu, DropdownItem, Popup, Loading} from "vant";
 
+Vue.use(Loading);
+Vue.use(Popup);
 Vue.use(Icon);
 Vue.use(Collapse);
 Vue.use(CollapseItem);
@@ -74,6 +80,7 @@ export default {
   },
   data() {
     return {
+      popupShow:true,
       activeNames: ['0'],
       WorkList:[
         {
@@ -181,6 +188,7 @@ export default {
         .post(urlClass.DetectWise + "GetOrderList", this.params)
         .then((Response) => {
           console.log(Response.data.Result.OrderList)
+          this.popupShow = false
           if (Response.data.Result.OrderList.length > 0) {
               this.show = false
               Response.data.Result.OrderList.forEach((item)=>{
@@ -202,6 +210,9 @@ export default {
             this.show = true
           }
 
+        }).catch((error)=>{
+          this.popupShow = false
+          console.log(error)
         });
     // if (this.WorkList.length != 0) {
     //   this.show = false

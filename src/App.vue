@@ -21,7 +21,6 @@ export default {
       image.src = img;
       image.onload = () => {
         count++;
-        console.log(count)
       };
     }
   },
@@ -63,5 +62,9 @@ body,
 ::-webkit-scrollbar {
   /* background: transparent; */
   display: none;
+}
+#statusBar{
+    height: 24px;
+    background: #000;
 }
 </style>

@@ -14,6 +14,7 @@ class Methods {
         }.bind(this));
     }
     loadPopup(_popupInfoData) {
+        console.log(_popupInfoData)
         for (var i = 0; i < _popupInfoData.length; i++) {
             var popupInfo = _popupInfoData[i];
             var mapPoint = {

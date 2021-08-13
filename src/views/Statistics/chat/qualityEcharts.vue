@@ -1,139 +1,132 @@
 <template>
-    <div class="box1">
+  <div class="box1">
     <div class="fold">
-      <p>报警数统计</p>
-      <p class="iconfont iconxia" @click="itemTF()" :class="className == true ? 'open' : 'close'"></p>
+      <p>设备数据质量统计</p>
+      <p
+        class="iconfont iconxia"
+        @click="itemTF()"
+        :class="className == true ? 'open' : 'close'"
+      ></p>
     </div>
     <transition name="fade">
-      <div id="qualityEcharts" class="wrap" v-show="className" ></div>
+      <div id="qualityEcharts" class="wrap" v-show="className"></div>
     </transition>
   </div>
 </template>
 
 <script>
 import Bus from "../../../utils/bus";
-import * as echarts from 'echarts';
+import * as echarts from "echarts";
 
 export default {
   data() {
     return {
       timeData: [],
       EquipmentData: [],
-      className:true,
-      myChart:null
+      className: true,
+      myChart: null,
+      VirtulData: [],
     };
   },
   mounted() {
     Bus.$on("EquipmentData", (res) => {
-      this.timeData = [];
-      this.EquipmentData = [];
-      res.forEach((item) => {
-        this.timeData.push(item.Date);
-        item.TotalList.forEach((val, idx) => {
-          this.EquipmentData.push([item.Date, idx, this.gears(val), val]);
-        });
+      console.log(res);
+      var VirtulData = [];
+      var EquipmentData = [];
+      res.forEach((item, index) => {
+        console.log();
+        this.EquipmentData.push(item.Date);
+        this.VirtulData.push(item.Val);
       });
       this.draw();
     });
   },
   methods: {
-    itemTF(){
-      this.$nextTick(()=>{
-        this.className = !this.className
-        // this.draw()
-      })
-    },
-    gears(val) {
-      var size = 0;
-      if (0 < val && val < 100) {
-        size = 1;
-      } else if (100 < val && val < 200) {
-        size = 2;
-      } else if (200 < val && val < 300) {
-        size = 3;
-      } else if (200 < val && val < 300) {
-        size = 4;
-      } else if (300 < val && val < 400) {
-        size = 5;
-      } else if (400 < val && val < 500) {
-        size = 6;
-      } else if (500 < val && val < 600) {
-        size = 7;
-      } else if (600 < val && val < 700) {
-        size = 8;
-      } else if (700 < val && val < 800) {
-        size = 9;
-      } else if (800 < val && val < 900) {
-        size = 10;
-      } else if (900 < val && val < 1000) {
-        size = 11;
-      }
-      return size;
+    itemTF() {
+      this.$nextTick(() => {
+        this.className = !this.className;
+      });
     },
     draw() {
-      if (this.myChart != null && this.myChart!= "" && this.myChart!= undefined) {
-        this.myChart.dispose();
-      }
-      this.myChart = echarts.init(
-        document.getElementById("qualityEcharts")
-      );
+      var EquipmentData = JSON.parse(JSON.stringify(this.EquipmentData));
+      var VirtulData = JSON.parse(JSON.stringify(this.VirtulData));
+      console.log(EquipmentData);
+      console.log(VirtulData);
+      // if (this.myChart != null && this.myChart!= "" && this.myChart!= undefined) {
+      //   this.myChart.dispose();
+      // }
+      this.myChart = echarts.init(document.getElementById("qualityEcharts"));
       this.myChart.setOption({
         tooltip: {
-          trigger: "item",
-          formatter: function (val) {
-            return (
-              val.data[0] +
-              "</br>" +
-              val.data[3] +
-              "块表数据有效率为" +
-              (val.data[1] == 0 ? "" : val.data[1]) +
-              "0%"
-            );
-          },
+          trigger: "axis",
+          // formatter: function (val) {
+          //   console.log(val.data);
+          //   return "表数据有效率为" +  "{c}" + "%";
+          // },
+          formatter: "表数据有效率为 : {c}",
         },
         grid: {
-          left: "6%",
-          right: "6%",
-          top: "10%",
-          bottom:"10%",
-          containLabel: true,
+          top: "26px",
+          left: "14%",
+          bottom: "30px",
         },
-        xAxis: [
-          {
-            type: "category",
-            data: this.timeData,
-            axisLabel: {
-              // showMaxLabel: true,
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: EquipmentData,
+          axisLabel: {
+            // showMaxLabel: true,
+            color: "#999999",
+          },
+          axisLine: {
+            lineStyle: {
+              color: "#D8D8D8",
+              width: 0.5,
             },
           },
-        ],
+        },
         yAxis: {
+          max: 100,
           axisLabel: {
-            formatter: function (value, index) {
-              switch (value) {
-                case 0:
-                  return "很差";
-                case 2:
-                  return "差";
-                case 4:
-                  return "一般";
-                case 6:
-                  return "好";
-                case 8:
-                  return "较好";
-                case 10:
-                  return "很好";
-              }
+            // showMaxLabel: true,
+            color: "#999999",
+          },
+          splitLine: {
+            //去除网格线
+            lineStyle: {
+              color: "#D8D8D8",
+              width: 0.5,
+              type:"dashed"
+            },
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#D8D8D8",
+              width: 0.5
             },
           },
         },
         series: [
           {
-            symbolSize: function (val) {
-              return val[2] * 4;
+            itemStyle: {
+              color: "rgba(142, 146, 169, 1)",
             },
-            data: this.EquipmentData,
-            type: "scatter",
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(142, 146, 169, 0.6)",
+                },
+                {
+                  offset: 1,
+                  color: "rgba(142, 146, 169, 0)",
+                },
+              ]),
+            },
+            data: VirtulData,
+            type: "line",
+            symbol: "none",
           },
         ],
       });
@@ -145,14 +138,14 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.box1{
+.box1 {
   width: 100%;
 }
 .wrap {
   width: 100%;
-  height: 250px;/*no*/
+  height: 250px; /*no*/
 }
-.fold{
+.fold {
   width: 100%;
   height: 44px;
   display: flex;
@@ -160,18 +153,19 @@ export default {
   align-items: center;
   box-sizing: border-box;
   padding: 0 25px;
-  box-shadow: 0px 0px 2px 0px #D8D8D8 inset;
+  box-shadow: 0px 0px 2px 0px #d8d8d8 inset;
 }
-.open{
-    transform: rotate(-180deg);
-    transition: transform .3s,-webkit-transform .3s;
+.open {
+  transform: rotate(-180deg);
+  transition: transform 0.3s, -webkit-transform 0.3s;
 }
-.close{
-    transform: rotate(0deg);
-    transition: transform .3s,-webkit-transform .3s;
+.close {
+  transform: rotate(0deg);
+  transition: transform 0.3s, -webkit-transform 0.3s;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

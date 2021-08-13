@@ -1,7 +1,7 @@
 <template>
     <div class="box1">
     <div class="fold">
-      <p>报警数统计</p>
+      <p>数据类型报警数量统计</p>
       <p class="iconfont iconxia" @click="itemTF()" :class="className == true ? 'open' : 'close'"></p>
     </div>
     <transition name="fade">
@@ -64,7 +64,7 @@ export default {
             name: "类型",
             type: "funnel",
             left: "20%",
-            width: "60%",
+            width: "50%",
             labelLine: {
               show: false,
             },

@@ -34,6 +34,16 @@
             "Type": "chaoshangxian",
             "Icon": "chaoshangxian",
             "ImgText": "超限报警"
+        },
+        {
+            "Type": "toohigh",
+            "Icon": "jiantou",
+            "ImgText": "数值过高报警"
+        },
+        {
+            "Type": "toolow",
+            "Icon": "jiantou1",
+            "ImgText": "数值过低报警"
         }
     ],
     "LevelData": [

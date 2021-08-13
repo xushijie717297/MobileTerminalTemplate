@@ -1,6 +1,7 @@
 <template>
   <div class="category">
     <p id="statusBar"></p>
+    <p class="nav">统计</p>
     <div class="box">
               <!-- 下拉菜单 -->
         <div class="DropdownMenu">
@@ -67,12 +68,10 @@
                 @confirm="onConfirm"
                 get-container="#app"
                 :min-date="minDate"
+                :formatter="formatter"
               />
             </van-dropdown-item>
           </van-dropdown-menu>
-          <div class="icon">
-            <van-icon name="sort" color="#000" />
-          </div>
         </div>
         <div class="paddings"></div>
         <policeEcharts></policeEcharts>
@@ -88,15 +87,22 @@
         <div class="paddings"></div>
         <handleEcharts></handleEcharts>
     </div>
+    <div style="height:20px"></div>
+    <van-popup v-model="popupShow" get-container="#app">
+      <van-loading type="spinner" color="#1989fa" size="24" />
+    </van-popup>
   </div>
 </template>
 <script>
 import Vue from "vue";
-import { DropdownMenu, DropdownItem, Icon } from "vant";
+import { DropdownMenu, DropdownItem, Icon, Popup, Loading} from "vant";
 
+Vue.use(Loading);
+Vue.use(Popup);
 Vue.use(Icon);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+import moment from "moment";
 import urlClass from "../../components/js/UrlClass"
 import Bus from "../../utils/bus"
 import policeEcharts from "./chat/policeEcharts.vue"
@@ -117,6 +123,7 @@ export default {
   },
   data() {
     return {
+      popupShow:true,
       show: false,
       minDate:new Date(2010, 0, 1),
       activeIndex: 0,
@@ -148,7 +155,15 @@ export default {
     warnCancel(){//报警类型确定
       this.$refs.itemType.toggle();
     },
+    formatter(day){
+      const date = (moment(day.date).format("YYYY-MM-DD"))
+          if (this.CountByDay.includes(date)) {
+            day.className = "dateRed"
+          }
+      return day
+    },
     warnDetermine(){
+      this.popupShow = true;
       this.$refs.itemType.toggle();
       this.params.WarningTypes = []
       this.WarningTypeList.forEach((item)=>{
@@ -167,6 +182,7 @@ export default {
       this.$refs.itemsGrade.toggle();
     },
     GradeDetermine(){
+      this.popupShow = true;
       this.$refs.itemsGrade.toggle();
       this.params.DataTypes = [];
       this.DataType.forEach((item)=>{
@@ -182,6 +198,7 @@ export default {
       this.GetOrderStatistics();
     },
     CityDetermine(){
+      this.popupShow = true;
       var cityList = [];
       this.params.Regions = []
       this.items.forEach((value,index) => {
@@ -240,6 +257,7 @@ export default {
       return `${date.getMonth() + 1}/${date.getDate()}`;
     },
     onConfirm(date) {
+      this.popupShow = true;
       const [start, end] = date;
       this.show = false;
       this.date = `${this.formatDate(start)} - ${this.formatDate(end)}`;
@@ -255,6 +273,18 @@ export default {
       this.GetWarningStatisticsByPartition();
       this.GetEquipmentStatistics();
       this.GetOrderStatistics();
+    },
+    GetMonthEventCountByDay() {//获取日历上面存在报警的日期
+      let params = {
+        YearMonth: this.$moment().format("YYYY-MM"),
+      };
+      this.$axios
+        .post(urlClass.DetectWise + "GetMonthEventCountByDay", params)
+        .then((Response) => {
+          Response.data.Result.forEach((res) => {
+            this.CountByDay.push(res.Date);
+          });
+        });
     },
     GetWarningTypeListToSelect(){//获取报警类型条件
       this.$axios
@@ -292,6 +322,7 @@ export default {
         .then((Response) => {
           let StatisticData = Response.data.Result;
           Bus.$emit("StatisticData", StatisticData);
+          this.popupShow = false;
         });
     },
         //获取报警数统计(报警类型)
@@ -354,6 +385,7 @@ export default {
     },
   },
   mounted() {
+   this.GetMonthEventCountByDay()
    this.GetWarningTypeListToSelect()
    this.GetDropDownMenuItem("Region");
    this.GetWarningStatisticsByDataType();
@@ -384,10 +416,48 @@ export default {
   flex: 1;
   flex-direction: column;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .paddings{
   width: 100%;
   height: 10px;
   background: #F0F0F0;
+}
+.nav{
+  height: 44px;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+</style>
+<style lang="less">
+.dateRed::before{
+  content: "";
+  display: block;
+  height: 4px;
+  width: 4px;
+  background: orange;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 15px;
+}
+.van-calendar__day--end,.van-calendar__day--start{
+  background: #000;
+}
+.van-calendar__day--middle{
+  color: #000;
+}
+.van-calendar__day--end::before{
+  display: none;
+}
+.van-calendar__day--start::before{
+  display: none;
+}
+.van-button--danger{
+  background: #000;
+  border-color: #000;
 }
 </style>

@@ -20,6 +20,7 @@ class Methods {
      * 加载popup的数据(id唯一标识)，可以累积添加数据
      */
     loadPopup(_popupInfoData) {
+        console.log(_popupInfoData)
         for (var i = 0; i < _popupInfoData.length; i++) {
             var popupInfo = _popupInfoData[i];
             popupInfo.id = i;

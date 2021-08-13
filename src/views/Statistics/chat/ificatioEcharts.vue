@@ -1,7 +1,7 @@
 <template>
     <div class="box1">
     <div class="fold">
-      <p>报警数统计</p>
+      <p>报警类型数量统计</p>
       <p class="iconfont iconxia" @click="itemTF()" :class="className == true ? 'open' : 'close'"></p>
     </div>
     <transition name="fade">
@@ -66,17 +66,31 @@ export default {
           itemHeight:12,
         },
         grid: {
-          left: "3%",
+          left: "26%",
           right: "4%",
           bottom: "3%",
-          containLabel: true,
         },
         xAxis: {
           type: "value",
+          show:false,
         },
         yAxis: {
           type: "category",
           data: this.WarningType,
+          axisLabel: {
+            show: true,
+            width: 50,
+            overflow: "breakAll",
+            lineHeight: 18,
+            align:"left",
+            margin: 72
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+              show: false
+          },
         },
         series: [
           {
@@ -91,7 +105,7 @@ export default {
               focus: "series",
             },
             itemStyle:{
-              color:"rgba(27, 63, 194, 0.8)"
+              color:"rgba(35, 162, 242, 1)"
             },
             data: this.Level1,
           },
@@ -106,7 +120,7 @@ export default {
               focus: "series",
             },
              itemStyle:{
-              color:"rgba(206, 115, 8, 0.8)"
+              color:"rgba(221, 138, 79, 1)"
             },
             data: this.Level2,
           },
@@ -121,7 +135,7 @@ export default {
               focus: "series",
             },
              itemStyle:{
-              color:"rgba(177, 6, 6, 0.8)"
+              color:"rgba(195, 48, 63, 1)"
             },
             data: this.Level3,
           },

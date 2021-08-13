@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     <p id="statusBar"></p>
+    <p class="nav">监控</p>
     <div class="box">
-      <notification></notification>
+      <!-- <notification></notification> -->
       <div class="legend">
         <p class="iconfont icontuli2" @click="legendClick()"></p>
         <p class="iconfont iconrefresh"  @click="Reset()"></p>
@@ -118,15 +119,13 @@
                 @confirm="onConfirm"
                 get-container="#app"
                 :min-date="minDate"
+                :formatter="formatter"
               />
             </van-dropdown-item>
           </van-dropdown-menu>
-          <div class="icon">
-            <van-icon name="sort" color="#000" />
-          </div>
         </div>
         <!-- 报警列表 -->
-        <div class="warningList">
+        <div class="warningList" v-if="datalistTF">
           <div
             class="warningItem"
             v-for="(item, index) in eventList"
@@ -154,7 +153,7 @@
                       ><em>{{ item.EventType | typeMillion }}</em
                       >{{ item.EventName }}</span
                     >
-                    <span>持续{{ item.ContinueTime | timeFilter }}</span>
+                    <span>持续{{ item.ContinueTime | timeFilter }}/<span :style="{ color: item.iconcolor }">{{item.eventTypeImgText}}</span></span>
                   </p>
                   <p
                     class="iconfont iconxia"
@@ -190,6 +189,10 @@
               </template>
             </van-swipe-cell>
           </div>
+        </div>
+        <div class="dataNull" v-else>
+          <p class="iconfont iconzanwushuju"></p>
+          <span>暂无数据</span>
         </div>
       </div>
     </div>
@@ -285,10 +288,12 @@ import dw2 from "../../assets/img/controlImg/dw2.png";
 import yellowdot from "../../assets/img/controlImg/event_yellowdot.png";
 import orangedot from "../../assets/img/controlImg/event_orangedot.png";
 import reddot from "../../assets/img/controlImg/event_reddot.png";
+import * as timeStamp from "../../utils/index";
+import moment from "moment";
 export default {
   name: "Home",
   components: {
-    notification,
+    // notification,
   },
   data() {
     return {
@@ -306,6 +311,7 @@ export default {
       endY: 0,
       minDate: new Date(2010, 0, 1),
       touch: true,
+      datalistTF:true,
       warnList: [
         { name: "报警总数", number: 0 },
         { name: "一级警报", number: 0 },
@@ -315,9 +321,9 @@ export default {
       itemT: false,
       WarningTypeList: [],
       GradeTypeList: [
-        { label: "一级", className: false },
-        { label: "二级", className: false },
-        { label: "三级", className: false },
+        { label: "轻微", className: false },
+        { label: "一般", className: false },
+        { label: "严重", className: false },
       ],
       activeIds: [],
       activeIndex: 0,
@@ -328,8 +334,9 @@ export default {
       RegionCode: [],
       EventTypeCode: [],
       EventStateCode: [],
+      CountByDay:[],
       StartTime: this.$moment()
-        .subtract("days", 0)
+        .subtract("days")
         .format("YYYY-MM-DD 00:00:00"),
       EndTime: this.$moment().format("YYYY-MM-DD 23:59:00"),
       EventMessage: [],
@@ -367,7 +374,12 @@ export default {
         type = "S";
       } else if (value == "chaoshangxian") {
         type = "C";
+      } else if (value == "toohigh") {
+        type = "T";
+      } else if (value == "toolow") {
+        type = "T";
       }
+
       return type;
     },
     timeFilter: function (value) {
@@ -406,6 +418,13 @@ export default {
     warnCancel() {
       //报警类型确定
       this.$refs.itemType.toggle();
+    },
+    formatter(day){
+      const date = (moment(day.date).format("YYYY-MM-DD"))
+          if (this.CountByDay.includes(date)) {
+            day.className = "dateRed"
+          }
+      return day
     },
     warnDetermine() {
       var List = [];
@@ -484,7 +503,17 @@ export default {
     onConfirm(date) {
       const [start, end] = date;
       this.show = false;
-      this.date = `${this.formatDate(start)} - ${this.formatDate(end)}`;
+      var CreateTime = ((new Date(start)).getTime()/1000).toFixed(0)
+      var CompleteTime = ((new Date(end)).getTime()/1000).toFixed(0)
+      this.date = `${timeStamp.parseTime(CreateTime,"{y}-{m}-{d} {h}:{i}:{s}")} - ${timeStamp.parseTime(CompleteTime,"{y}-{m}-{d} {h}:{i}:{s}")}`;
+      this.StartTime = timeStamp.parseTime(CreateTime,"{y}-{m}-{d} {h}:{i}:{s}")
+      this.EndTime = timeStamp.parseTime(CompleteTime,"{y}-{m}-{d} {h}:{i}:{s}")
+      this.$nextTick(()=>{
+        this.GetEventNumber()
+      })
+      this.GetAreaCoordinatesInfo()
+      this.GetEventListByHomePage()
+      this.popupShow = true
     },
     touchEnd(e) {
       this.endY = e.changedTouches[0].clientY;
@@ -547,6 +576,26 @@ export default {
           this.policeList = this.items[0].Children;
         });
     },
+    GetMonthEventCountByDay() {
+      let params = {
+        YearMonth: this.$moment().format("YYYY-MM"),
+      };
+      var CountByDay = []
+      this.$axios
+        .post(urlClass.DetectWise + "GetMonthEventCountByDay", params)
+        .then((Response) => {
+          Response.data.Result.forEach((res) => {
+            CountByDay.push(res.Date);
+            this.CountByDay = CountByDay;
+          });
+          this.StartTime = this.$moment(CountByDay[CountByDay.length - 1]).format("YYYY-MM-DD HH:mm:ss")
+          this.EndTime = this.$moment(CountByDay[CountByDay.length - 1]).format("YYYY-MM-DD 23:59:00")
+          console.log(this.StartTime)
+          console.log(this.EndTime)
+          this.GetEventListByHomePage();
+          this.GetEventNumber();
+        });
+    },
     GetEventListByHomePage() {
       //获取事件列表信息
       this.eventList = [];
@@ -566,32 +615,38 @@ export default {
         )
         .then((res) => {
           let resData = [...res.data.Result];
-          resData.forEach((item) => {
-            item.class = false;
-            configjsdata.WarningTypeData.forEach((value, index) => {
-              if (value.Type === item.EventType) {
-                item.eventTypeImg = value.HomeImgUrl;
-                item.eventIcon = value.Icon;
-                item.eventTypeImgText = value.ImgText;
-              }
+          this.popupShow = false
+          console.log(resData)
+          if (resData.length) {
+            resData.forEach((item) => {
+              item.class = false;
+              configjsdata.WarningTypeData.forEach((value, index) => {
+                if (value.Type === item.EventType) {
+                  item.eventTypeImg = value.HomeImgUrl;
+                  item.eventIcon = value.Icon;
+                  item.eventTypeImgText = value.ImgText;
+                }
+              });
+              configjsdata.LevelData.forEach((value, index) => {
+                if (Number(value.Level) === Number(item.Level)) {
+                  item.warningTypebgcolor = value.bgcolor;
+                  item.iconcolor = value.iconcolor;
+                }
+              });
             });
-            configjsdata.LevelData.forEach((value, index) => {
-              if (Number(value.Level) === Number(item.Level)) {
-                item.warningTypebgcolor = value.bgcolor;
-                item.iconcolor = value.iconcolor;
-              }
-            });
-          });
-          if (resData.length > 1) {
-            resData[0].class = true;
-            resData[1].class = true;
+            if (resData.length > 1) {
+              resData[0].class = true;
+              resData[1].class = true;
+            }
+            if (resData.length == 1) {
+              resData[0].class = true;
+            }
+            this.eventList = resData;
+            console.log(this.eventList);
+            this.datalistTF = true
+          }else{
+            this.datalistTF = false
           }
-          if (resData.length == 1) {
-            resData[0].class = true;
-          }
-
-          this.eventList = resData;
-          console.log(this.eventList);
         });
     },
     GetNewEvent() {
@@ -618,16 +673,20 @@ export default {
         .post(urlClass.DetectWise + "GetEventNumber", params)
         .then((res) => {
           console.log(res.data.Result);
+          this.warnList[0].number = 0
+          this.warnList[1].number = 0
+          this.warnList[2].number = 0
+          this.warnList[3].number = 0
           if (res.data.Result) {
             res.data.Result.forEach((item, idx) => {
               this.warnList[0].number += item.Num;
               if (item.Level == 1) {
                 this.warnList[1].number = item.Num;
               }
-              if (item.Level2 == 2) {
+              if (item.Level == 2) {
                 this.warnList[2].number = item.Num;
               }
-              if (item.Level3 == 3) {
+              if (item.Level == 3) {
                 this.warnList[3].number = item.Num;
               }
             });
@@ -636,6 +695,7 @@ export default {
             this.warnList[2].number = 0;
             this.warnList[1].number = 0;
           }
+          console.log(this.warnList)
         });
     },
     listItemClickMap(item) {
@@ -1314,12 +1374,13 @@ export default {
     }
   },
   mounted() {
+    this.GetMonthEventCountByDay();
     this.createMap();
-    this.GetEventListByHomePage();
+    // this.GetEventListByHomePage();
     this.GetWarningTypeListToSelect();
     this.GetDropDownMenuItem("Region");
     this.GetNewEvent();
-    this.GetEventNumber();
+    // this.GetEventNumber();
   },
 };
 </script>
@@ -1356,5 +1417,42 @@ export default {
     display: flex;
     flex-direction: column;
   }
+}
+.nav{
+  height: 44px;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+</style>
+<style lang="less">
+.dateRed::before{
+  content: "";
+  display: block;
+  height: 4px;
+  width: 4px;
+  background: orange;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 15px;
+}
+.van-calendar__day--end,.van-calendar__day--start{
+  background: #000;
+}
+.van-calendar__day--middle{
+  color: #000;
+}
+.van-calendar__day--end::before{
+  display: none;
+}
+.van-calendar__day--start::before{
+  display: none;
+}
+.van-button--danger{
+  background: #000;
+  border-color: #000;
 }
 </style>

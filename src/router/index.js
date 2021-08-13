@@ -51,6 +51,26 @@ const routes = [
 			},
 		]
 	},
+	{
+		path: '/eventDetail',
+		name: 'eventDetail',
+		component: resolve => require(['@/views/event/eventDetail/eventDetail'], resolve),
+	},
+	{
+		path: '/Hscreen',
+		name: 'Hscreen',
+		component: resolve => require(['@/views/event/eventDetail/HscreenChat'], resolve),
+	},
+	{
+		path: '/popupChat',
+		name: 'popupChat',
+		component: resolve => require(['@/views/event/eventDetail/popupChat'], resolve),
+	},
+	{
+		path: '/eventItem',
+		name: 'eventItem',
+		component: resolve => require(['@/views/event/eventItem/eventItem'], resolve),
+	}
 ]
 
 const router = new VueRouter({

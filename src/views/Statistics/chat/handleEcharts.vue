@@ -1,7 +1,7 @@
 <template>
     <div class="box1">
     <div class="fold">
-      <p>报警数统计</p>
+      <p>工单发布处理情况统计</p>
       <p class="iconfont iconxia" @click="itemTF()" :class="className == true ? 'open' : 'close'"></p>
     </div>
     <transition name="fade">
@@ -69,7 +69,7 @@ export default {
           formatter: "{b} : {c}",
         },
         legend: {
-          top: "5%",
+          bottom: "2%",
           left: "center",
         },
         graphic: {
@@ -120,6 +120,12 @@ export default {
               borderRadius: 10,
               borderColor: "#fff",
               borderWidth: 2,
+                normal: {
+                  color: function(params) {
+                    var colorData = ["#22a2f2","#25de9f","#c3303f"]
+                      return colorData[params.dataIndex]
+                  },
+                }
             },
             label: {
               show: false,

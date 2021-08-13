@@ -1,7 +1,7 @@
 <template>
   <div class="box1">
     <div class="fold">
-      <p>报警数统计</p>
+      <p>日报警数量统计</p>
       <p class="iconfont iconxia" @click="itemTF()" :class="className == true ? 'open' : 'close'"></p>
     </div>
     <transition name="fade">
@@ -62,7 +62,7 @@ export default {
           },
         },
         legend: {
-          data: ["一级", "二级", "三级"],
+          data: ["轻微", "一般", "严重"],
           top: "8%",
           itemGap: 20,
           itemWidth: 12,
@@ -81,23 +81,45 @@ export default {
             data: this.timeData,
             axisLabel: {
               // showMaxLabel: true,
+              color:"#999999"
             },
             axisTick: {
               show: false
+            },
+            axisLine:{
+              lineStyle:{
+                color:"#D8D8D8",
+                width:0.5
+              }
             }
           },
         ],
         yAxis: [
           {
             type: "value",
+            axisLabel: {
+              // showMaxLabel: true,
+              color:"#999999"
+            },
             axisLine: {
-              show: true
+              show: true,
+              lineStyle:{
+                color:"#D8D8D8",
+                width:0.5
+              }
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                width: 1,
+                color:"#D8D8D8"
+              }
             }
           },
         ],
         series: [
           {
-            name: "一级",
+            name: "轻微",
             type: "bar",
             barWidth: 10,
             stack: "total",
@@ -110,7 +132,7 @@ export default {
             data: this.Level1,
           },
           {
-            name: "二级",
+            name: "一般",
             type: "bar",
             stack: "total",
             emphasis: {
@@ -122,7 +144,7 @@ export default {
             data: this.Level2,
           },
           {
-            name: "三级",
+            name: "严重",
             type: "bar",
             stack: "total",
             emphasis: {
