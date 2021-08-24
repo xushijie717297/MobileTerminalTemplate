@@ -73,19 +73,21 @@
             </van-dropdown-item>
           </van-dropdown-menu>
         </div>
-        <div class="paddings"></div>
-        <policeEcharts></policeEcharts>
-        <div class="paddings"></div>
-        <ificatioEcharts></ificatioEcharts>
-        <div class="paddings"></div>
-        <div class="paddings"></div>
-        <typeEcharts></typeEcharts>
-        <div class="paddings"></div>
-        <partitionEcharts></partitionEcharts>
-        <div class="paddings"></div>
-        <qualityEcharts></qualityEcharts>
-        <div class="paddings"></div>
-        <handleEcharts></handleEcharts>
+        <div class="content">
+          <div class="paddings"></div>
+          <policeEcharts></policeEcharts>
+          <div class="paddings"></div>
+          <ificatioEcharts></ificatioEcharts>
+          <div class="paddings"></div>
+          <div class="paddings"></div>
+          <typeEcharts></typeEcharts>
+          <div class="paddings"></div>
+          <partitionEcharts></partitionEcharts>
+          <div class="paddings"></div>
+          <qualityEcharts></qualityEcharts>
+          <div class="paddings"></div>
+          <handleEcharts></handleEcharts>
+        </div>
     </div>
     <div style="height:20px"></div>
     <van-popup v-model="popupShow" get-container="#app">
@@ -146,7 +148,6 @@ export default {
   },
   methods: {
     openType(){
-      console.log(1111)
       this.touch = false
     },
     closeType(){
@@ -242,13 +243,10 @@ export default {
       this.show = true;
     },
     dropdownT(value) {
-      console.log(value);
     },
     dropdownC(value) {
-      console.log(value);
     },
     dropdownB(value) {
-      console.log(value);
     },
     touchStart(e) {
       this.startY = e.touches[0].clientY;
@@ -264,7 +262,7 @@ export default {
       console.log(start,end)//2021-06-17 23:59:00  2021-6-1 0:0:0
       var dateS = this.parseTime(start)
       var dateE = this.parseTime(end)
-      console.log(dateS,dateE)
+      // console.log(dateS,dateE)
       this.params.BeginTime = dateS;
       this.params.EndTime = dateE;
       this.GetWarningStatisticsByDataType();
@@ -282,7 +280,7 @@ export default {
         .post(urlClass.DetectWise + "GetMonthEventCountByDay", params)
         .then((Response) => {
           Response.data.Result.forEach((res) => {
-            this.CountByDay.push(res.Date);
+            // this.CountByDay.push(res.Date);
           });
         });
     },
@@ -415,12 +413,12 @@ export default {
   display: flex;
   flex: 1;
   flex-direction: column;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .paddings{
   width: 100%;
-  height: 10px;
+  height: 10px;/*no*/
   background: #F0F0F0;
 }
 .nav{

@@ -49,18 +49,14 @@ export default {
   methods: {
     onClick(name, title) {
       this.tabValue = name
-      console.log(name,title)
       localStorage.setItem("active",name)
     }
   },
   mounted() {
-      console.log(this.tabValue,this.active)
       let tab = localStorage.getItem("active")
       if (tab != null) {
-        console.log(tab)
         this.active = Number(tab)
         this.tabValue = Number(tab)
-        console.log(this.active,this.tabValue)
       }
       this.$refs.vanTab.resize();
   },

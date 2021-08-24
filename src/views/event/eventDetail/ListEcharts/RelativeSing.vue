@@ -71,7 +71,7 @@ export default {
       });
       this.chart.tooltip(false);
       const v1 = this.chart.createView({
-        padding: [5, 0, 0, 0],
+        padding: [10, 12, 20, 50],
       });
       v1.data(this.sectionData);
       v1.scale("temperature", {
@@ -91,7 +91,7 @@ export default {
       }
 
       const v2 = this.chart.createView({
-        padding: [5, 0, 0, 0],
+        padding: [10, 12, 20, 50],
       });
       v2.data(this.averages);
       // v2.axis(false);

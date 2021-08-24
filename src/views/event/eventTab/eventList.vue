@@ -142,6 +142,7 @@
         <van-icon name="filter-o" size="18px" color="#000" />
       </div>
     </div>
+    <div class="gap"></div>
     <!-- 报警列表 -->
     <div class="warningList" 
         v-infinite-scroll="GetEventList"
@@ -281,6 +282,7 @@ import {
   Popup,
   Loading,
   Switch,
+  Dialog 
 } from "vant";
 import { List } from "vant";
 
@@ -385,7 +387,7 @@ export default {
       handleCode: [],
       eventList: [],
       datalistTF:true,
-      Page: 0,
+      Page: 1,
       infiniteId: +new Date(),
       StartTime:null,
       EndTime:null
@@ -452,6 +454,8 @@ export default {
       this.LevelCode = cityLists;
       this.showScreen = false;
       this.popupShow = true;
+      this.eventList = []
+      this.Page = 1;
       this.GetEventList();
     },
     warnDetermine() {
@@ -461,7 +465,7 @@ export default {
           cityList.push(value.label);
         }
       });
-      console.log(cityList);
+      // console.log(cityList);
       this.EventTypeCode = cityList;
       this.$refs.itemType.toggle();
       this.popupShow = true;
@@ -487,10 +491,12 @@ export default {
       this.GetEventList();
     },
     EventItemClick(value) {
+      this.eventList = []
+      this.Page = 1;
       this.popupShow = true;
       this.eventValue = value;
       this.GetEventList();
-      console.log(value);
+      // console.log(value);
     },
     handleItemClick(item) {
       if (item == "全部") {
@@ -500,6 +506,8 @@ export default {
         this.handleCode.push(item)
       }
       this.popupShow = true;
+      this.eventList = []
+      this.Page = 1;
       this.GetEventList();
     },
     handleCancel() {
@@ -529,6 +537,8 @@ export default {
       this.$refs.itemsCity.toggle();
       this.RegionCode = cityList
       this.popupShow = true;
+      this.eventList = []
+      this.Page = 1;
       this.GetEventList();
     },
     TypeItemClick(item) {
@@ -574,6 +584,8 @@ export default {
       this.StartTime = timeStamp.parseTime(CreateTime,"{y}-{m}-{d} {h}:{i}:{s}")
       this.EndTime = timeStamp.parseTime(CompleteTime,"{y}-{m}-{d} {h}:{i}:{s}")
       this.popupShow = true;
+      this.eventList = []
+      this.Page = 1;
       this.GetEventList();
     },
     formatDate(date) {
@@ -581,7 +593,7 @@ export default {
     },
     listItemClick(item) {
       localStorage.setItem('item', JSON.stringify(item));
-      console.log(item);
+      // console.log(item);
       this.$router.push({
         path: "/eventDetail",
         query: { item: item },
@@ -655,18 +667,18 @@ export default {
     },
     async GetEventList() {
       const time2 = await this.GetMonthEventCountByDay();
-      console.log(time2);
-      console.log("GetEventList");
+      // console.log(time2);
+      // console.log("GetEventList");
       this.PageIndexStatus = true;
       this.PageIndex = 1;
       this.event = [];
       this.loading = true;
-      console.log(this.StartTime)
+      // console.log(this.StartTime)
       if (this.StartTime) {
         time2[0] = this.StartTime
         time2[1] = this.EndTime
       }
-
+      console.log(this.Page)
       let res = {
         StartTime: time2[0],
         EndTime: time2[1],
@@ -680,48 +692,57 @@ export default {
         ProcessingStatus: this.handleCode,
         Page: this.Page,
       };
+      this.Page++;
       this.$axios
         .post(urlClass.DetectWise + "GetEventList", JSON.stringify(res))
         .then((e) => {
-          console.log(e); 
-          let resData = [...e.data.Result];
-          this.popupShow = false;
-          console.log(this.Page)
-          if (resData.length) {
-            this.Page += 1;
-            resData.forEach((item) => {
-              item.class = false;
-              configjsdata.WarningTypeData.forEach((value, index) => {
-                if (value.Type === item.EventType) {
-                  item.eventTypeImg = value.HomeImgUrl;
-                  item.eventIcon = value.Icon;
-                  item.eventTypeImgText = value.ImgText;
-                }
+          // console.log(e); 
+          if (e.data.Ok) {
+            let resData = [...e.data.Result];
+            this.popupShow = false;
+            if (resData.length) {
+              resData.forEach((item) => {
+                item.class = false;
+                configjsdata.WarningTypeData.forEach((value, index) => {
+                  if (value.Type === item.EventType) {
+                    item.eventTypeImg = value.HomeImgUrl;
+                    item.eventIcon = value.Icon;
+                    item.eventTypeImgText = value.ImgText;
+                  }
+                });
+                configjsdata.LevelData.forEach((value, index) => {
+                  if (Number(value.Level) === Number(item.Level)) {
+                    item.warningTypebgcolor = value.bgcolor;
+                    item.iconcolor = value.iconcolor;
+                  }
+                });
               });
-              configjsdata.LevelData.forEach((value, index) => {
-                if (Number(value.Level) === Number(item.Level)) {
-                  item.warningTypebgcolor = value.bgcolor;
-                  item.iconcolor = value.iconcolor;
-                }
-              });
+              this.eventList =this.eventList.concat(resData);
+              if (this.eventList.length > 1) {
+                this.eventList[0].class = true;
+                this.eventList[1].class = true;
+              }
+              if (this.eventList.length == 1) {
+                this.eventList[0].class = true;
+              }
+              // console.log("有数据",resData)
+              this.datalistTF = true
+            }else if(resData.length == 0 && this.Page == 1){
+              this.datalistTF = false
+              console.log("暂无数据")
+            }else if(resData.length == 0 && this.Page != 1){
+              // console.log("没有更多数据来")
+              this.dataLoadNomore = true
+            }
+          }else{
+            Dialog.alert({
+              title: '标题',
+              message: '请求超时',
+            }).then(() => {
+              this.popupShow = false;
             });
-            this.eventList =this.eventList.concat(resData);
-            if (this.eventList.length > 1) {
-              this.eventList[0].class = true;
-              this.eventList[1].class = true;
-            }
-            if (this.eventList.length == 1) {
-              this.eventList[0].class = true;
-            }
-            console.log("有数据",resData)
-            this.datalistTF = true
-          }else if(resData.length == 0 && this.Page == 0){
-            this.datalistTF = false
-            console.log("暂无数据")
-          }else if(resData.length == 0 && this.Page != 0){
-            console.log("没有更多数据来")
-            this.dataLoadNomore = true
           }
+
           
         });
     },
@@ -759,7 +780,9 @@ export default {
 }
 .van-button--danger{
   background: #000;
-  border-color: #000;
+  border-color: #f0f0f0;
+  box-sizing: border-box;
+
 }
 </style>
 <style lang="less" scoped>
@@ -883,5 +906,9 @@ export default {
       background: #000;
       color: #fff;
   }
+}
+.gap{
+  height: 10px;
+  background: #f0f0f0;
 }
 </style>

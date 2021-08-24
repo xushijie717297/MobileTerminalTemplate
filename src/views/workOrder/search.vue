@@ -22,11 +22,13 @@
         </van-dropdown-item>
       </van-dropdown-menu>
     </div>
+    <div class="cell"></div>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
+import Bus from "../../utils/bus"
 import { DropdownMenu, DropdownItem, Icon } from "vant";
 
 Vue.use(Icon);
@@ -75,6 +77,7 @@ export default {
   methods: {
     getValue(value){
         console.log(value)
+        Bus.$emit("StatisticStatus",value)
     },
     onItemClick(item){
       item.classNames = !item.classNames
@@ -83,8 +86,7 @@ export default {
     formatter(day){
       const date = (moment(day.date).format("YYYY-MM-DD"))
           if (this.CountByDay.includes(date)) {
-            day.className = "dateRed"
-            console.log(day)
+            // day.className = "dateRed"
           }
       return day
     },
@@ -93,13 +95,12 @@ export default {
     },
     onConfirm(date) {
       const [start, end] = date;
+      console.log(date)
       this.show = false;
-      var CreateTime = ((new Date(start)).getTime()/1000).toFixed(0)
-      var CompleteTime = ((new Date(end)).getTime()/1000).toFixed(0)
-      console.log(timeStamp.parseTime(CreateTime,"{y}-{m}-{d}"))
-      console.log(timeStamp.parseTime(CompleteTime,"{y}-{m}-{d}"))
-      this.date = `${timeStamp.parseTime(CreateTime,"{y}-{m}-{d}")} - ${timeStamp.parseTime(CompleteTime,"{y}-{m}-{d}")}`;
-      
+      var CreateTime =  timeStamp.parseTime(((new Date(start)).getTime()/1000).toFixed(0),"{y}-{m}-{d}")
+      var CompleteTime =  timeStamp.parseTime(((new Date(end)).getTime()/1000).toFixed(0),"{y}-{m}-{d}")
+      this.data = [CreateTime,CompleteTime]
+      Bus.$emit("StatisticDate",this.data)
     },
     warnDetermine() {
         this.$refs.itemType.toggle();
@@ -268,5 +269,9 @@ export default {
 }
 .active{
     color: #2B699D !important;
+}
+.cell{
+  height: 10px;
+  background: #f0f0f0;
 }
 </style>

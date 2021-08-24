@@ -90,7 +90,8 @@ export default {
         {text:"未报警",value:2},
       ],
       PartitionName:"",
-      MonitoringPointName:""
+      MonitoringPointName:"",
+      Status:""
     };
   },
   mounted() {
@@ -107,14 +108,14 @@ export default {
      this.GetMonitoringPointStatusList()
     },
     onCancel() {
-      console.log('取消');
+      // console.log('取消');
       this.show = true
       this.MonitoringPointName = "";
      this.GetMonitoringPointStatusList()
     },
     getValue(value){
         this.radioTypeId = (value + 1).toString();
-        console.log(this.radioTypeId)
+        // console.log(this.radioTypeId)
         this.title = this.dataType[value].text
         if(value != "9"){
           this.PartitionFlowShow = true
@@ -134,14 +135,28 @@ export default {
         this.GetMonitoringPointStatusList();
     },
     getWarnValue(value){
-      console.log(this.StatusWarn[value].text)
+      console.log(this.StatusWarn[value].value)
+      switch (this.StatusWarn[value].value) {
+        case 0:
+          this.Status = ""
+          break;
+        case 1:
+          this.Status = "1"
+          break;
+        case 2:
+          this.Status = "0"
+          break;
+        
+      }
       this.title2 = this.StatusWarn[value].text
+      this.popupShow = true;
+      this.GetMonitoringPointStatusList();
     },
     GradeCancel() {
       this.$refs.itemsGrade.toggle();
     },
     MonitoringPoint(item){
-      console.log(item)
+      // console.log(item)
         this.$router.push({
         path:"/eventItem",
         query:{item:item}
@@ -153,7 +168,7 @@ export default {
         .post(urlClass.SystemSetting + "GetWarningDataTypeListToSelect")
         .then((Response) => {
           Response.data.Result.options.splice(10, 1);
-          console.log(Response.data.Result.options)
+          // console.log(Response.data.Result.options)
           Response.data.Result.options.forEach((item,index)=>{
             this.dataType.push(
               {
@@ -171,7 +186,7 @@ export default {
         //   .format("YYYY-MM-DD HH:mm:ss"),
         Date:"2021-06-14 10:30:00",
         PartitionId: "",
-        Status: "",
+        Status: this.Status,
         // PartitionName: this.PartitionName
       };
       this.$axios
@@ -193,7 +208,7 @@ export default {
     GetMonitoringPointStatusList() {
       let date = this.$moment().subtract(2, "hour").format("YYYY-MM-DD HH:mm:ss")
       var minute = Number(date.substring(14,16));
-      console.log(minute > 45)
+      // console.log(minute > 45)
       var LastMinute = "";
       if (minute > 45) {
         LastMinute = minute - 45
@@ -202,13 +217,13 @@ export default {
       }else if (minute > 15) {
         LastMinute = minute - 15
       }
-      console.log(LastMinute)
-      console.log(this.$moment(date).subtract(LastMinute, "minutes").format("YYYY-MM-DD HH:mm:ss"))
+      // console.log(LastMinute)
+      // console.log(this.$moment(date).subtract(LastMinute, "minutes").format("YYYY-MM-DD HH:mm:ss"))
       let params = {
         DataTypeId: this.radioTypeId,
         Date: this.$moment(date).subtract(LastMinute, "minutes").format("YYYY-MM-DD HH:mm:ss"),
         PartitionId: this.PartitionId,
-        Status: "",
+        Status: this.Status,//1报警//0未报警//不填为""
         MonitoringPointName:this.MonitoringPointName
       };
       this.$axios
@@ -250,7 +265,7 @@ export default {
   height: 42px;
   display: flex;
   & /deep/ .van-dropdown-menu {
-    width: calc(100% - 0px);
+    width: calc(100% - 10px);
   }
   & /deep/ .van-dropdown-menu__bar{
     height: 42px;

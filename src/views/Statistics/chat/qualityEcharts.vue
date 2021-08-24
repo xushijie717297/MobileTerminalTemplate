@@ -1,7 +1,7 @@
 <template>
   <div class="box1">
     <div class="fold">
-      <p>设备数据质量统计</p>
+      <p>数据有效率统计</p>
       <p
         class="iconfont iconxia"
         @click="itemTF()"
@@ -30,11 +30,11 @@ export default {
   },
   mounted() {
     Bus.$on("EquipmentData", (res) => {
-      console.log(res);
+      // console.log(res);
       var VirtulData = [];
       var EquipmentData = [];
       res.forEach((item, index) => {
-        console.log();
+        // console.log();
         this.EquipmentData.push(item.Date);
         this.VirtulData.push(item.Val);
       });
@@ -50,8 +50,8 @@ export default {
     draw() {
       var EquipmentData = JSON.parse(JSON.stringify(this.EquipmentData));
       var VirtulData = JSON.parse(JSON.stringify(this.VirtulData));
-      console.log(EquipmentData);
-      console.log(VirtulData);
+      // console.log(EquipmentData);
+      // console.log(VirtulData);
       // if (this.myChart != null && this.myChart!= "" && this.myChart!= undefined) {
       //   this.myChart.dispose();
       // }

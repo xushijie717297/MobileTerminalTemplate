@@ -16,7 +16,7 @@
           <div class="coolTtem">
             <p>
               <span>工单编号</span>
-              <span>{{item.EventId}}</span>
+              <span>{{item.OrderNum}}</span>
             </p>
             <p>
               <span>工单状态</span>
@@ -73,6 +73,7 @@ Vue.use(DropdownItem);
 import workJson from "../../components/json/work"
 import search from "./search.vue"
 import urlClass from "../../components/js/UrlClass"
+import Bus from "../../utils/bus"
 export default {
   name: "Waring",
   components: {
@@ -176,20 +177,14 @@ export default {
   },
   methods: {
     GetOrderList() {
-      console.log(this.params)
-
-    },
-  },
-  mounted() {
-    
-  },
-  created () {
-      this.$axios
+      this.popupShow = true
+     this.$axios
         .post(urlClass.DetectWise + "GetOrderList", this.params)
         .then((Response) => {
-          console.log(Response.data.Result.OrderList)
           this.popupShow = false
+          // console.log(Response.data.Result.OrderList)
           if (Response.data.Result.OrderList.length > 0) {
+             
               this.show = false
               Response.data.Result.OrderList.forEach((item)=>{
                 for ( let i in item) {
@@ -199,12 +194,12 @@ export default {
                 }
               workJson.workjson.forEach((value,index)=>{
                 if (value.type === item.OrderState) {
-                  console.log(1)
+                  // console.log(1)
                     item.color = value.color
                 }
               })
             })
-            console.log(Response.data.Result.OrderList)
+            // console.log(Response.data.Result.OrderList)
             this.WorkList = Response.data.Result.OrderList
           }else{
             this.show = true
@@ -227,7 +222,23 @@ export default {
     // }else{
     //   this.show = true
     // }
-
+    },
+  },
+  mounted() {
+      Bus.$on("StatisticStatus", (res) => {
+        console.log(res)
+      this.params.PageNo = res
+      this.GetOrderList()
+      
+    });
+    Bus.$on("StatisticDate", (res) => {
+      this.params.BeginTime = res[0]
+      this.params.EndTime = res[1]
+      this.GetOrderList()
+    });
+  },
+  created () {
+      this.GetOrderList();
   }
 };
 </script>

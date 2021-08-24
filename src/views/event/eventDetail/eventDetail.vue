@@ -691,22 +691,22 @@ export default {
           this.chartsData = Response.data.Result.MonitoringPointList;
           console.log("GetPipeBurstEventTagNumberInfoList:", Response.data.Result);
           let relationData = [];
-          let DataInList = Response.data.Result.PipeBurstEventInfo.DataInList;
-          let LimitUpDownList =
-            Response.data.Result.PipeBurstEventInfo.LimitUpDownList;
-          DataInList.forEach((item, idx) => {
-            relationData.push({
-              Vlaue: item.Value,
-              Time: item.Time,
-              Sx: LimitUpDownList[idx].Temperature[1],
-              Xx: LimitUpDownList[idx].Temperature[0],
-            });
-          });
-          this.chartsData.unshift({
-            ChartData: relationData,
-            MonitoringPointName:
-              Response.data.Result.PipeBurstEventInfo.PartitionName,
-          });
+          // let DataInList = Response.data.Result.PipeBurstEventInfo.DataInList;
+          // let LimitUpDownList =
+          //   Response.data.Result.PipeBurstEventInfo.LimitUpDownList;
+          // DataInList.forEach((item, idx) => {
+          //   relationData.push({
+          //     Vlaue: item.Value,
+          //     Time: item.Time,
+          //     Sx: LimitUpDownList[idx].Temperature[1],
+          //     Xx: LimitUpDownList[idx].Temperature[0],
+          //   });
+          // });
+          // this.chartsData.unshift({
+          //   ChartData: relationData,
+          //   MonitoringPointName:
+          //     Response.data.Result.PipeBurstEventInfo.PartitionName,
+          // });
           this.exitPointData = [];
           this.chartsData.forEach((element) => {
             if (element.X && element.Y) {

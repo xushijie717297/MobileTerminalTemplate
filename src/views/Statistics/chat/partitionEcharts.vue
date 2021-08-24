@@ -48,7 +48,7 @@ export default {
       this.PartitionData = [];
       var cityData = []
       res.forEach((item) => {
-        console.log(item.children)
+        // console.log(item.children)
         cityData = [...cityData,...item.children]
         this.count = 0;
         this.count += item.value;
@@ -81,8 +81,8 @@ export default {
            break;
        }
       })
-      console.log(this.yAxisData,this.seriesData)
-      console.log(this.colorDatas)
+      // console.log(this.yAxisData,this.seriesData)
+      // console.log(this.colorDatas)
       this.draw(this.PartitionData);
       this.draws();
     });

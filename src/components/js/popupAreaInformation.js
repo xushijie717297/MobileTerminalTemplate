@@ -38,7 +38,6 @@ class Methods {
     }
 
     loadinfoWindow(obj) {
-        console.log(obj)
         const popupID = this.popupName + obj.id;
         //动态添加气泡窗口DIV
         var infoDiv = '<div id="popup-AreaInformation' + popupID + '" class="popupAreaInformation">' +

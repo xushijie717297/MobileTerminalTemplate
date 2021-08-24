@@ -37,6 +37,10 @@
         <p>处置状态</p>
         <p>{{listData.EventState}}</p>
       </li>
+      <li>
+        <p>可能原因</p>
+        <p>{{listData.Reason}}</p>
+      </li>
     </ul>
   </div>
 </template>

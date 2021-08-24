@@ -72,7 +72,10 @@ export default {
         },
         xAxis: {
           type: "value",
-          show:false,
+          // show:false,
+          axisLine: {
+              // show: false
+          },
         },
         yAxis: {
           type: "category",
@@ -86,10 +89,13 @@ export default {
             margin: 72
           },
           axisTick: {
-            show: false
+            // show: false
           },
           axisLine: {
-              show: false
+              // show: false
+              lineStyle:{
+                // color:"rgba(221, 138, 79, 1)"
+              }
           },
         },
         series: [

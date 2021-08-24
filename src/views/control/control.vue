@@ -405,11 +405,9 @@ export default {
   created() {
     // this.items = global.area;
     // this.policeList = this.items[0].Children
-    console.log(this.items);
   },
   methods: {
     openType() {
-      console.log(1111);
       this.touch = false;
     },
     closeType() {
@@ -428,13 +426,11 @@ export default {
     },
     warnDetermine() {
       var List = [];
-      console.log(this.WarningTypeList)
       this.WarningTypeList.forEach((value, index) => {
           if (value.className == true) {
             List.push(value.label);
           }
       });
-      console.log(List);
       this.$refs.itemType.toggle();
       this.EventTypeCode = List;
       this.GetEventNumber()
@@ -457,7 +453,6 @@ export default {
           }
         });
       });
-      console.log(cityList);
       this.$refs.itemsCity.toggle();
       this.RegionCode = cityList
       this.GetEventNumber()
@@ -469,7 +464,6 @@ export default {
     },
     onItemClick(item) {
       item.classNames = !item.classNames;
-      console.log(item);
     },
     warnItemClick(item) {
       // this.$set(this.lister, 0, "newValue")
@@ -479,19 +473,14 @@ export default {
       item.className = !item.className;
     },
     onNavClick(index) {
-      console.log(index);
       this.policeList = this.items[index].Children;
-      console.log(this.policeList);
     },
     itemTF(data) {
       data.class = !data.class;
-      console.log(data);
     },
     cellClick(left, right, cell, outside) {
-      // console.log(left, right, cell, outside);
     },
     openDropdown() {
-      console.log(1);
       this.show = true;
     },
     touchStart(e) {
@@ -565,7 +554,6 @@ export default {
       this.$axios
         .post(urlClass.DetectWise + "GetDropDownMenuItem", JSON.stringify(res))
         .then((res) => {
-          console.log(res.data.Result);
           res.data.Result.map((item, index) => {
             Object.assign(item, { text: item.Label });
             item.Children.map((items, index) => {
@@ -590,10 +578,10 @@ export default {
           });
           this.StartTime = this.$moment(CountByDay[CountByDay.length - 1]).format("YYYY-MM-DD HH:mm:ss")
           this.EndTime = this.$moment(CountByDay[CountByDay.length - 1]).format("YYYY-MM-DD 23:59:00")
-          console.log(this.StartTime)
-          console.log(this.EndTime)
+          this.createMap();
           this.GetEventListByHomePage();
           this.GetEventNumber();
+          // console.log(this.StartTime)
         });
     },
     GetEventListByHomePage() {
@@ -616,7 +604,6 @@ export default {
         .then((res) => {
           let resData = [...res.data.Result];
           this.popupShow = false
-          console.log(resData)
           if (resData.length) {
             resData.forEach((item) => {
               item.class = false;
@@ -642,7 +629,6 @@ export default {
               resData[0].class = true;
             }
             this.eventList = resData;
-            console.log(this.eventList);
             this.datalistTF = true
           }else{
             this.datalistTF = false
@@ -659,7 +645,6 @@ export default {
       this.$axios
         .post(urlClass.DetectWise + "GetNewEvent", JSON.stringify(data))
         .then((res) => {
-          console.log(res.data.Result);
         });
     },
     GetEventNumber() {
@@ -672,7 +657,6 @@ export default {
       this.$axios
         .post(urlClass.DetectWise + "GetEventNumber", params)
         .then((res) => {
-          console.log(res.data.Result);
           this.warnList[0].number = 0
           this.warnList[1].number = 0
           this.warnList[2].number = 0
@@ -695,22 +679,20 @@ export default {
             this.warnList[2].number = 0;
             this.warnList[1].number = 0;
           }
-          console.log(this.warnList)
         });
     },
     listItemClickMap(item) {
       //点击事件列表
       this.drwdPoint(item);
+      console.log(item)
       this.IsShowName()
     },
     drwdPoint(data) {
-      console.log(data);
       let X, Y, label;
       let geoType = data.Geometry.GeoType;
       if (!geoType) {
         geoType = data.RegionGeo.GeoType;
       }
-      console.log(geoType);
       var listData = [];
       this.drwdPointLayer.removeAll();
       this.gl.removeAll();
@@ -769,12 +751,10 @@ export default {
           this.gl.add(gra);
           break;
         case "Special":
-          console.log(data.Geometry.Geo.Locations.length);
           label = data.RegionGeo.Geo[0].Label;
           if (label) {
             this.HighlightHoverByLabel(label);
           }
-          console.log(data.Geometry.Geo);
           listData = [];
           this.drwdPointLayer.removeAll();
           var locations = data.Geometry.Geo.Locations;
@@ -787,11 +767,9 @@ export default {
             });
           }
           this.drwdListPoints(listData);
-          console.log(1);
           var tempData = [];
           this.gl.removeAll();
           popupTableWater.destroy();
-          console.log(data.Geometry.Geo.WarnFlows);
           var warnFlows = data.Geometry.Geo.WarnFlows;
           for (let i = 0; i < warnFlows.length; i++) {
             const warnFlow = warnFlows[i];
@@ -813,7 +791,6 @@ export default {
             });
           }
           if (tempData.length > 0) {
-            console.log(tempData)
             this.lableData = tempData
             this.loadLablePoints(tempData);
           }
@@ -830,7 +807,6 @@ export default {
     },
     drwdListPoints(listData) {
       if (listData.length > 0) {
-        console.log("drwdListPoints:", listData.length);
         var tempData = [];
         this.drwdPointLayer.removeAll();
         for (let i = 0; i < listData.length; i++) {
@@ -933,6 +909,7 @@ export default {
             y: obj.Y,
             spatialReference: this.view.spatialReference,
           };
+          console.log(tempObj)
           var gra = new this.arcgisAPI.Graphic({
             geometry: point,
             symbol: symbol,
@@ -947,16 +924,15 @@ export default {
       }
     },
     IsShowName() {
-      console.log(this.checked)
       //貌似没用
       if (this.checked) {
         var tempData = [];
+        console.log(this.lableData)
         for (let i = 0; i < this.lableData.length; i++) {
           const obj = this.lableData[i];
           var tempObj = { Name: obj.name, Type: obj.type, X: obj.X, Y: obj.Y };
           tempData.push(tempObj);
         }
-        console.log(tempData)
         if (tempData.length > 0) {
           popupTableWater.destroy();
           popupTableWater.loadPopup(tempData);
@@ -990,12 +966,10 @@ export default {
         this.tempGra = null;
       }
       if (this.featurePolygonLayerview && label != "") {
-        console.log(this.graData);
         for (let i = 0; i < this.graData.length; i++) {
           const gra = this.graData[i];
           const item = gra.attributes;
           if (item.OTITLE == label) {
-            console.log("item:", item);
             this.highlightHover = this.featurePolygonLayerview.highlight(gra);
             self.tempGra = gra;
             // mapView.center = gra.geometry.extent.center;
@@ -1005,7 +979,6 @@ export default {
           }
         }
       }
-      console.log(1111);
     },
     createMap() {
       loadModules(
@@ -1133,7 +1106,6 @@ export default {
           this.view.popup.actions = null;
           view.on("click", function (e) {
             view.hitTest(e).then((res) => {
-              console.log(res);
               if (res.results[0]) {
                 var results = res.results.filter(function (result) {
                   return (
@@ -1179,6 +1151,7 @@ export default {
       );
     },
     GetAreaCoordinatesInfo() {
+      // console.log(this.StartTime)
       let res = {
         StartTime: this.StartTime,
         EndTime: this.EndTime,
@@ -1189,7 +1162,6 @@ export default {
         .post(urlClass.DetectWise + "GetAreaGeometry", res)
         .then((e) => {
           var areaList = [];
-          console.log(e.data);
           var result = e.data.Result.Geo;
           for (let i = 0; i < result.length; i++) {
             const item = result[i];
@@ -1214,12 +1186,12 @@ export default {
             };
             areaList.push(obj);
           }
-          console.log(areaList);
+          // console.log(areaList);
           this.createFeatureLayer(areaList);
         });
     },
     createFeatureLayer(dataList) {
-      console.log("dataList:", dataList);
+      // console.log("dataList:", dataList);
       this.areaData = [];
       var tempLayer = this.viewMap.findLayerById("featurePolygon");
       if (tempLayer) {
@@ -1229,9 +1201,9 @@ export default {
       this.graData = [];
       var rings = [];
       popupAreaInformation.destroy();
-      // debugger
       let uniqueValueInfos = [];
       for (let i = 0; i < dataList.length; i++) {
+        // debugger
         const element = dataList[i];
         rings.push(element.rings);
         const poly = new this.arcgisAPI.Polygon({
@@ -1255,6 +1227,7 @@ export default {
             X: poly.extent.center.x,
             Y: poly.extent.center.y,
           });
+          // console.log(this.areaData)
         }
         //渲染分级随机颜色
         uniqueValueInfos.push({
@@ -1269,8 +1242,9 @@ export default {
           },
         });
       }
+      // console.log(this.areaData)
       if (this.areaData.length > 0) {
-        console.log(this.areaData);
+        // console.log(this.areaData);
         popupAreaInformation.loadPopup(this.areaData);
       }
       var featurePolygon = new this.arcgisAPI.FeatureLayer({
@@ -1369,19 +1343,20 @@ export default {
     },
     PointsName(){
       // IsShowName
-      console.log(this.checked)
       this.IsShowName()
     }
   },
   mounted() {
     this.GetMonthEventCountByDay();
-    this.createMap();
     // this.GetEventListByHomePage();
     this.GetWarningTypeListToSelect();
     this.GetDropDownMenuItem("Region");
     this.GetNewEvent();
     // this.GetEventNumber();
   },
+  beforeDestroy () {
+    this.view = null
+  }
 };
 </script>
 <style >
@@ -1453,6 +1428,7 @@ export default {
 }
 .van-button--danger{
   background: #000;
-  border-color: #000;
+  border-color: #f0f0f0;
+  box-sizing: border-box;
 }
 </style>
