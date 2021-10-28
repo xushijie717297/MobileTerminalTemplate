@@ -18,6 +18,8 @@ export default {
       MaxValue: 0,
       chart: null,
       PipeBurstData: {},
+      upperLimits:[],
+      lowerLimits:[],
     };
   },
   props: ["id"],
@@ -40,8 +42,12 @@ export default {
         let bardata = [];
         var BeginTimeIndex;
         var EndTimeIndex;
+        var sectionDataList = [];
+        var averagesList = [];
         this.PipeBurstData.LimitUpDownList.forEach((element, idx) => {
           bardtime.push(element.Time);
+          var UpperLower = [Number(element.Temperature[0]),Number(element.Temperature[1])]
+          sectionDataList.push(UpperLower);
           this.sectionData.push({
             time: element.Time,
             temperature: [
@@ -51,11 +57,48 @@ export default {
           });
         });
         this.PipeBurstData.DataInList.forEach((element, idx) => {
+          averagesList.push(element.Value)
           this.averages.push({
             time: element.Time,
             temperature: element.Value,
           });
         });
+        var upperLimits = [];
+        var lowerLimits = [];
+        sectionDataList.forEach((item,index)=>{
+          if (item[0]<averagesList[index]) {
+            upperLimits.push({
+              time:this.averages[index].time,
+              temperature:averagesList[index]
+            })
+            lowerLimits.push({
+              time:this.averages[index].time,
+              temperature:Number
+            })
+          }else if (item[1]>averagesList[index]) {
+            upperLimits.push({
+              time:this.averages[index].time,
+              temperature:Number
+            })
+            lowerLimits.push({
+              time:this.averages[index].time,
+              temperature:averagesList[index]
+            })
+          }else{
+            upperLimits.push({
+              time:this.averages[index].time,
+              temperature:Number
+            })
+            lowerLimits.push({
+              time:this.averages[index].time,
+              temperature:Number
+            })
+          }
+        })
+        this.lowerLimits = lowerLimits;
+        this.upperLimits = upperLimits;
+        console.log(upperLimits)
+        console.log(lowerLimits)
         this.PipeBurstData.HistoryWindowList.forEach((element, idx) => {
           var format = [];
           element.forEach((item) => {
@@ -66,6 +109,7 @@ export default {
           });
           this.HistoryData.push(format);
         });
+        console.log(this.HistoryData)
         setTimeout(() => {
           this.draw();
         }, 1000);
@@ -118,6 +162,7 @@ export default {
         padding: [10, 12, 20, 55],
       });
       v1.data(this.sectionData);
+      console.log(this.sectionData)
       v1.scale("temperature", {
         alias: "上下限",
       });
@@ -134,10 +179,10 @@ export default {
           },
         });
       }
-
       const v2 = this.chart.createView({
         padding: [25, 45, 20, 70],
       });
+      console.log(this.averages)
       v2.data(this.averages);
       v2.axis(false);
       v2.scale("temperature", {
@@ -149,6 +194,27 @@ export default {
         lineWidth: 1,
         fillOpacity: 1,
       }); */
+      const v4 = this.chart.createView({
+        padding: [25, 45, 20, 70],
+      });
+      v4.data(this.upperLimits);
+      v4.axis(false);
+      v4.scale("temperature", {
+        alias: "超下限值",
+      });
+      // v4.tooltip(false);
+      v4.line().position("time*temperature").color("#00FF00");
+      const v5 = this.chart.createView({
+        padding: [25, 45, 20, 70],
+      });
+      v5.data(this.upperLimits);
+      console.log(this.upperLimits)
+      v5.axis(false);
+      // v5.tooltip(false);
+      v5.scale("temperature", {
+        alias: "超上限值",
+      });
+      v5.line().position("time*temperature").color("#FF0000");
       if (this.EventType == "minflowatnight") {
         v2.annotation().line({
           start: ["min", this.MaxValue],

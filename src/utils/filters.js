@@ -35,7 +35,7 @@ export function timeFilter(value) {
     value = day + "天";
   }
   if (day == 0) {
-    value = "中"
+    value = "持续中"
   }
   if (hour > 0) {
     value = hour + "小时";

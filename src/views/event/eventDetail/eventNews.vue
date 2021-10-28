@@ -6,6 +6,10 @@
         <p>{{listData.EventName}}</p>
       </li>
       <li>
+        <p>报警大类</p>
+        <p>{{listData.BigType}}</p>
+      </li>
+      <li>
         <p>开始时间</p>
         <p>{{listData.BeginTime}}</p>
       </li>
@@ -40,6 +44,10 @@
       <li>
         <p>可能原因</p>
         <p>{{listData.Reason}}</p>
+      </li>
+      <li>
+        <p>报警描述</p>
+        <p>{{listData.Description}}</p>
       </li>
     </ul>
   </div>
